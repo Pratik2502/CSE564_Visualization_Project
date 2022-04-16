@@ -219,6 +219,22 @@ function updateChoropleth(data, attr, countries) {
 
 }
 
+
+
+
+// ********************************************************** //
+
+var lowColor = 'rgb(250, 197, 173)'
+var highColor = 'rgb(85, 28, 1)'
+var selected_countries = []
+var selected_attr = "new_cases"
+var selected_start_date = "2020-01-23"
+var selected_end_date = "2021-04-17"
+
+dates = {}
+dates.start = selected_start_date
+dates.end = selected_end_date
+
 $(document).ready(function() {
     $.ajax({
         type: "POST",
