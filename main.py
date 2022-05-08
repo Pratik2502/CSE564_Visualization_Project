@@ -20,8 +20,11 @@ curr_dir = os.path.dirname(__file__)
 
 # data paths
 data_path = os.path.join(curr_dir, os.path.join('data', "owid-covid-data.csv"))
-geo_json_path = os.path.join(curr_dir, os.path.join('data', 'countries.geo.json'))
-covid_geo_json_path = os.path.join(curr_dir, os.path.join('data', 'covid_geo.json'))
+# geo_json_path = os.path.join(curr_dir, os.path.join('data', 'countries.geo.json'))
+geo_json_path = os.path.join(curr_dir, os.path.join('data', 'countries_with_crop.json'))
+# covid_geo_json_path = os.path.join(curr_dir, os.path.join('data', 'covid_geo.json'))
+covid_geo_json_path = os.path.join(curr_dir, os.path.join('data', 'countries_with_crop.json'))
+
 world_line_data_path = os.path.join(curr_dir, os.path.join('data', "world-data.csv"))
 bubble_data_path = os.path.join(curr_dir, os.path.join('data', "bubble_npi.csv"))
 barchart_data_path = os.path.join(curr_dir, os.path.join('data', "world-seasonal-data.csv"))
@@ -72,18 +75,32 @@ def preprocess_pcp_data():
     
     pcp_data=data
     ## countries in npi data
-    countries = ['ALB', 'AUT', 'BEL', 'BIH', 'BRA', 'CAN', 'HKG', 'HRV', 'CZE',
-       'DNK', 'ECU', 'EGY', 'SLV', 'EST', 'FIN', 'FRA', 'DEU', 'GHA',
-       'GRC', 'HND', 'HUN', 'ISL', 'IND', 'IDN', 'ITA', 'JPN', 'KAZ',
-       'RKS', 'KWT', 'LIE', 'LTU', 'MYS', 'MUS', 'MEX', 'MNE', 'NLD',
-       'NZL', 'MKD', 'NOR', 'POL', 'PRT', 'IRL', 'ROU', 'SEN', 'SRB',
-       'SGP', 'SVK', 'SVN', 'KOR', 'ESP', 'SWE', 'CHE', 'SYR', 'TWN',
-       'THA', 'GBR', 'USA', 'AUS']
+
+    # countries = ['ALB', 'AUT', 'BEL', 'BIH', 'BRA', 'CAN', 'HKG', 'HRV', 'CZE',
+    #    'DNK', 'ECU', 'EGY', 'SLV', 'EST', 'FIN', 'FRA', 'DEU', 'GHA',
+    #    'GRC', 'HND', 'HUN', 'ISL', 'IND', 'IDN', 'ITA', 'JPN', 'KAZ',
+    #    'RKS', 'KWT', 'LIE', 'LTU', 'MYS', 'MUS', 'MEX', 'MNE', 'NLD',
+    #    'NZL', 'MKD', 'NOR', 'POL', 'PRT', 'IRL', 'ROU', 'SEN', 'SRB',
+    #    'SGP', 'SVK', 'SVN', 'KOR', 'ESP', 'SWE', 'CHE', 'SYR', 'TWN',
+    #    'THA', 'GBR', 'USA', 'AUS']
+
+    countries = ['ARG', 'AUT', 'AZE', 'BHS', 'BGD', 'BLR', 'BEL', 'BEN', 'BOL',
+     'BWA', 'BRA', 'BGR', 'BFA', 'CPV', 'KHM', 'CAN', 'CHL', 'CHN',
+     'COL', 'CIV', 'HRV', 'CUB', 'CYP', 'CZE', 'DNK', 'ECU', 'EGY',
+     'ERI', 'EST', 'SWZ', 'FJI', 'FIN', 'FRA', 'DEU', 'GHA', 'GRC',
+     'HND', 'HUN', 'IND', 'IDN', 'IRN', 'IRL', 'ISR', 'ITA', 'JPN',
+     'JOR', 'KAZ', 'KEN', 'KOR', 'KWT', 'KGZ', 'LVA', 'LTU', 'LUX',
+     'MDG', 'MLI', 'MLT', 'MRT', 'MEX', 'MDA', 'MNG', 'MAR', 'NPL',
+     'NLD', 'NIC', 'NER', 'NGA', 'MKD', 'NOR', 'OMN', 'PAK', 'PAN',
+     'PRY', 'PER', 'PHL', 'POL', 'PRT', 'QAT', 'ROU', 'RUS', 'SAU',
+     'SEN', 'SVK', 'SVN', 'ZAF', 'ESP', 'VCT', 'SUR', 'SWE', 'CHE',
+     'TJK', 'TZA', 'THA', 'TGO', 'TTO', 'TUN', 'UKR', 'ARE', 'USA',
+     'URY', 'VNM', 'YEM', 'ZWE']
     
-    to_remove = ["SEN", "SLV", "BIH", "TWN", "BEL", "HRV", "SYR", "MNE", "CZE", "MKD", "SVK", "GHA", "EGY", "EST", "ROU"]
+    # to_remove = ["SEN", "SLV", "BIH", "TWN", "BEL", "HRV", "SYR", "MNE", "CZE", "MKD", "SVK", "GHA", "EGY", "EST", "ROU"]
 
     pcp_data = data.loc[data.id.isin(countries)].reset_index(drop=True)
-    pcp_data = pcp_data.loc[~pcp_data.id.isin(to_remove)].reset_index(drop=True)  
+    # pcp_data = pcp_data.loc[~pcp_data.id.isin(to_remove)].reset_index(drop=True)  
     
 @app.route("/pcp", methods=["POST" , "GET"])
 def get_pcp_data():
@@ -100,7 +117,42 @@ def get_pcp_data():
 
     pcp_data_send = pcp_data.loc[(pcp_data.date>=start_date) & (pcp_data.date<=end_date)]
     
-    pcp_axis = ["id","location", 'gdp_per_capita', 'stringency_index', 'human_development_index', 'median_age', 'hospital_beds_per_thousand', 'positive_rate', 'new_cases_per_million', 'new_deaths_per_million', 'new_vaccinations_smoothed_per_million']
+    # pcp_axis = ["id","location", 'gdp_per_capita', 'stringency_index', 'human_development_index', 'median_age', 'hospital_beds_per_thousand', 'positive_rate', 'new_cases_per_million', 'new_deaths_per_million', 'new_vaccinations_smoothed_per_million']
+    pcp_axis = [
+       'index', 'Country Name', 'Country Code', 'year',
+       'Access to electricity (% of population)',
+       'Access to electricity, rural (% of rural population)',
+       'Agricultural land (% of land area)', 'Agricultural land (sq. km)',
+       'Agricultural machinery, tractors',
+       'Agricultural machinery, tractors per 100 sq. km of arable land',
+       'Agricultural methane emissions (% of total)',
+       'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
+       'Agricultural nitrous oxide emissions (% of total)',
+       'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
+       'Agricultural raw materials exports (% of merchandise exports)',
+       'Agricultural raw materials imports (% of merchandise imports)',
+       'Agriculture, forestry, and fishing, value added (% of GDP)',
+       'Agriculture, forestry, and fishing, value added (current US$)',
+       'Arable land (% of land area)', 'Arable land (hectares per person)',
+       'Arable land (hectares)', 'Birth rate, crude (per 1,000 people)',
+       'Cereal production (metric tons)', 'Cereal yield (kg per hectare)',
+       'Crop production index (2004-2006 = 100)',
+       'Death rate, crude (per 1,000 people)',
+       'Employment in agriculture (% of total employment) (modeled ILO estimate)',
+       'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
+       'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
+       'Food production index (2004-2006 = 100)',
+       'Forest area (% of land area)', 'Forest area (sq. km)',
+       'GDP per capita (current US$)', 'Land area (sq. km)',
+       'Land under cereal production (hectares)',
+       'Livestock production index (2004-2006 = 100)',
+       'Mineral rents (% of GDP)',
+       'Mortality rate, infant (per 1,000 live births)',
+       'Permanent cropland (% of land area)', 'Population, total',
+       'Rural population', 'Rural population (% of total population)',
+       'Rural population growth (annual %)', 'Surface area (sq. km)'
+    ]
+
     pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
     pcp_data_temp["id"] = pcp_data_send["id"].unique()
         
