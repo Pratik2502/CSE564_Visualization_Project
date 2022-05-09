@@ -230,10 +230,43 @@ var selected_countries = []
 var selected_attr = "new_cases"
 var selected_start_date = "2020-01-23"
 var selected_end_date = "2021-04-17"
+var width = 650;
+var height = 338;
+var worldmap_country = "world";
 
 dates = {}
 dates.start = selected_start_date
 dates.end = selected_end_date
+
+var svg = d3.select("#worldmap")
+    .append('svg')
+    .attr("width", width)
+    .attr("height", height)
+    .style("fill", "none")
+
+function reset() {
+    svg.transition()
+        .duration(750)
+        .call(zoom.transform, d3.zoomIdentity); // updated for d3 v4
+}
+
+svg.append("rect")
+    .attr("class", "background")
+    .attr("width", width)
+    .attr("height", height)
+    .on("click", reset);
+
+var g = svg.append("g");
+
+var paths = g.selectAll("path")
+        .data(data.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        // .attr("class", "state");
+
+var countries_path_arr = paths._groups[0]
+
 
 $(document).ready(function() {
     $.ajax({
