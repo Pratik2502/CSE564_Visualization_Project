@@ -30,6 +30,8 @@ bubble_data_path = os.path.join(curr_dir, os.path.join('data', "bubble_npi.csv")
 barchart_data_path = os.path.join(curr_dir, os.path.join('data', "world-seasonal-data.csv"))
 hashtags_data_path = os.path.join(curr_dir, os.path.join('data', "hashtags.csv"))
 
+agri_data_path = os.path.join(curr_dir, os.path.join('data', "reduced_data.xlsx"))
+
 with open(geo_json_path) as f:
     gj = geojson.load(f)
     for i in range(len(gj["features"])):
@@ -50,6 +52,8 @@ bar_df = pd.read_csv(barchart_data_path)
 world_line_df = pd.read_csv(world_line_data_path)
 bubble_df = pd.read_csv(bubble_data_path)
 hashtag_df = pd.read_csv(hashtags_data_path)
+
+agri_df = pd.read_excel(agri_data_path)
 
 def preprocess():
     global data
@@ -186,6 +190,15 @@ def get_worldmap_data():
             gj["features"][i]["new_vaccinations"] = int(mean_new_vaccinations[id])  
 
     return gj
+
+
+@app.route("/agriLineChart", methods=["GET","POST"])
+def get_agri_linechart_data():
+    global agri_df
+    agri_line_df = agri_df.loc[agri_df["Country Code"]=="USA"]
+    d1 = agri_line_df.to_dict(orient="records")
+    D = { "agriLineData":d1 }
+    return json.dumps(D)
 
 @app.route("/linechart", methods=["POST" , "GET"])
 def get_linechart_data():
