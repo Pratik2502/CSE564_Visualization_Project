@@ -42,7 +42,7 @@
     <div class="navbar-nav navbar-inverse navbar-fixed-top">
         <div class="container">
             <div id="dashboardHeader">
-                <h3>COVID-19 - Government Interventions Analysis</h3>
+                <h3>Parameters affecting Agricultural industry of a country</h3>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-sm-5" style="padding-right: 5px;">
                 <div class="dash-unit">
-                    <dtitle id="worldTitle">AVERAGE DAILY NEW_CASES BETWEEN 2020-1-1 TO 2021-4-17</dtitle>
+                    <dtitle id="worldTitle">AVERAGE Crop Production Index of the world</dtitle>
                     <hr>
                     <div class='row'>
                     </div>
@@ -68,26 +68,26 @@
             <div class="col-sm-7" style="padding-left: 5px;">
                 <div class="dash-unit" title="Time-Series line plot">
                     <div class='row'>
-                        <dtitle id="lineTitle">AVERAGE CROP_PRODUCTION_IDX OF WORLD BETWEEN 2020-1-1 TO 2021-4-17</dtitle>
-                        <select id='covidattr'>
+                        <dtitle id="lineTitle">AVERAGE CROP_PRODUCTION_IDX OF A COUNTRY</dtitle>
+                        <!-- <select id='covidattr'>
                                 <option value="new_cases">Daily Cases</option>
                                 <option value="new_deaths">Daily Deaths</option>
                                 <option value="new_vaccinations">Daily Vaccinations</option>
                                 <option value="crop_production_idx">Crop Production Index</option>
-                        </select>
+                        </select> -->
                         <hr>
                         <div id="linechart"></div>
                         <div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetDashboard()">
+                                <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetLineChart()">
                                 <label class="form-check-label" for="cropProdIdx">Crop production index (2004-2006 = 100)</label><br>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetDashboard()">
+                                <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetLineChart()">
                                 <label class="form-check-label" for="foodProdIdx">Food production index (2004-2006 = 100)</label><br>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gdp" value="GDP" onchange="resetDashboard()">
+                                <input class="form-check-input" type="checkbox" id="gdp" value="GDP" onchange="resetLineChart()">
                                 <label class="form-check-label" for="gdp">GDP per capita (current US$)</label><br>
                             </div>
                         </div>

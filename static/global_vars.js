@@ -39,24 +39,38 @@ $.ajax({
     }
 });
 
-$.ajax({
-    type: "GET",
-    url: "/agriLineChart",
-    success: function(response) {
-        // console.log(" ============ Ajax success ===========");
-        // console.log(response);
-        lineChartData = JSON.parse(response)
-        // for (var i in lineChartData.features)
-        //     all_countries.push(lineChartData.features[i].properties.name);
 
-        // worldData.features.forEach(element => {
-        //     locationIDMap[element["id"]] = element.properties.name
-        // });
-
-        // createLineChart(lineChartData["agriLineData"], selected_attr)
-        createLineChart(lineChartData["agriLineData"], "Crop production index (2004-2006 = 100)")
-    },
-    error: function(err) {
-        console.log(err);
-    }
-});
+function resetLineChart() {
+    console.log("!!!!!! inside reset !!!!!")
+    ddVal = { "country": worldmap_country }
+    reqDataSent = JSON.stringify(ddVal);
+    console.log(reqDataSent);
+    $.ajax({
+        // type: "GET",
+        type: "POST",
+        url: "/agriLineChart",
+        contentType: "application/json",
+        data: reqDataSent,
+        dataType: "json",
+        success: function(response) {
+            console.log(" ============ Ajax success ===========");
+            console.log(response);
+            lineChartData = response;
+            // lineChartData = JSON.parse(response)
+            // for (var i in lineChartData.features)
+            //     all_countries.push(lineChartData.features[i].properties.name);
+    
+            // worldData.features.forEach(element => {
+            //     locationIDMap[element["id"]] = element.properties.name
+            // });
+    
+            // createLineChart(lineChartData["agriLineData"], selected_attr)
+            createLineChart(lineChartData["agriLineData"], "Crop production index (2004-2006 = 100)")
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+    
+}
+resetLineChart()

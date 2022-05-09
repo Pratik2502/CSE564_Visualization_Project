@@ -317,7 +317,7 @@ function createChoropleth(data, attr, countries) {
 
                 worldmap_country = d.id;
 
-                worldMapTrigger.a = d.id
+                // worldMapTrigger.a = d.id
 
 
                 var lineTitle = document.getElementById("lineTitle").innerHTML.split(" ")
@@ -342,6 +342,7 @@ function createChoropleth(data, attr, countries) {
                         return "gray"
                     })
                 }
+                resetLineChart()
 
             }
 
@@ -351,7 +352,7 @@ function createChoropleth(data, attr, countries) {
 
                 worldmap_country = d.id;
 
-                worldMapTrigger.a = d.id
+                // worldMapTrigger.a = d.id
 
                 for (i = 0; i < countries_path_arr.length; i++) {
                     d3.select(countries_path_arr[i]).style("fill", function(p) {
@@ -370,7 +371,7 @@ function createChoropleth(data, attr, countries) {
 
             if (String(+d[attr]) === "NaN") {
                 worldmap_country = "world"
-                worldMapTrigger.a = "world"
+                // worldMapTrigger.a = "world"
 
                 for (i = 0; i < countries_path_arr.length; i++) {
                     d3.select(countries_path_arr[i])
@@ -384,11 +385,12 @@ function createChoropleth(data, attr, countries) {
                             return ramp(+p[attr])
                         })
                 }
+                resetLineChart()
             }
 
             if (String(+d[attr]) === "0") {
                 worldmap_country = "world"
-                worldMapTrigger.a = "world"
+                // worldMapTrigger.a = "world"
 
                 for (i = 0; i < countries_path_arr.length; i++) {
                     d3.select(countries_path_arr[i])
@@ -402,6 +404,7 @@ function createChoropleth(data, attr, countries) {
                             return ramp(+p[attr])
                         })
                 }
+                resetLineChart()
             }
             tip.hide()
         }

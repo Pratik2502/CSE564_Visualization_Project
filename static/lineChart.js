@@ -140,7 +140,6 @@ function createLineChart(lineChartData, selectedAttr) {
     // console.log($('#cropProdIdx').value)
     
     if(document.getElementById("cropProdIdx").checked) {
-        console.log("Entered this condition!!! Yayyy")
         plotInner.append('path')
             // .datum(data)
             .datum(lineChartData)
