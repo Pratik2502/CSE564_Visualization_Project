@@ -2,6 +2,7 @@ var all_countries = []
 
 var pcp_countries = ["United States of America", "India"]
 var worldmap_country = "world";
+var agriDataFeatures = []
 
 // var selected_attr = "new_cases"
 var selected_attr = "crop_production_idx"
@@ -29,6 +30,7 @@ $.ajax({
 
         worldData.features.forEach(element => {
             locationIDMap[element["id"]] = element.properties.name
+            // agriDataFeatures.add(element)
         });
         createChoropleth(worldData, selected_attr)
     },

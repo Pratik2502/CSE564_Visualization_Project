@@ -195,7 +195,7 @@ def get_worldmap_data():
 @app.route("/agriLineChart", methods=["GET","POST"])
 def get_agri_linechart_data():
     global agri_df
-    agri_line_df = agri_df.loc[agri_df["Country Code"]=="USA"]
+    agri_line_df = agri_df.loc[agri_df["Country Code"]=="IND"]
     d1 = agri_line_df.to_dict(orient="records")
     D = { "agriLineData":d1 }
     return json.dumps(D)
