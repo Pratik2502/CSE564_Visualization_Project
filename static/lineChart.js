@@ -170,5 +170,9 @@ function createLineChart(lineChartData, selectedAttr) {
     }
     
 
+    worldMapTrigger.registerListener(function(val) {
+        resetLineChart()
+    });
+
 }
 

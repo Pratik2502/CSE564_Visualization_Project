@@ -230,10 +230,9 @@ function worldMap(dataset, attr, countries) {
                 if (String(+d[attr]) !== "NaN") {
                     worldmap_country = d.id;
                     console.log("country set to: ", worldmap_country)
-                    resetLineChart()
+                    // resetLineChart()
 
-                    // worldMapTrigger.a = d.id
-                    // worldMapTrigger.a = "Country Code"
+                    worldMapTrigger.a = d.id
 
                     d3.select(this)
                         .style("opacity", 1)
@@ -241,8 +240,8 @@ function worldMap(dataset, attr, countries) {
                         .style("stroke-width", 3);
                 } else {
                     worldmap_country = "world"
-                    resetLineChart()
-                    // worldMapTrigger.a = "world"
+                    // resetLineChart()
+                    worldMapTrigger.a = "world"
                 }
                 tip.hide()
             });
