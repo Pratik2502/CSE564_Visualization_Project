@@ -79,15 +79,15 @@
                         <div id="linechart"></div>
                         <div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx">
+                                <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetDashboard()">
                                 <label class="form-check-label" for="cropProdIdx">Crop production index (2004-2006 = 100)</label><br>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx">
+                                <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetDashboard()">
                                 <label class="form-check-label" for="foodProdIdx">Food production index (2004-2006 = 100)</label><br>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="gdp" value="GDP">
+                                <input class="form-check-input" type="checkbox" id="gdp" value="GDP" onchange="resetDashboard()">
                                 <label class="form-check-label" for="gdp">GDP per capita (current US$)</label><br>
                             </div>
                         </div>

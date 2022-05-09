@@ -29,11 +29,6 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr('height', innerHeightLine)
         .attr('transform', 'translate(' + marginUpperLineChart.left + ',' + marginUpperLineChart.top + ')')
 
-    // margin = marginUpperLineChart,
-    //     margin2 = marginBottomLineChart,
-    //     width = outerWidthLine - margin.left - margin.right,
-    //     height = outerHeightLine - margin.top - margin.bottom,
-    //     height2 = outerHeightLine - margin2.top - margin2.bottom;
 
 
     xdata_min = d3.min(lineChartData, function(d) { return d["year"]; });
@@ -41,12 +36,7 @@ function createLineChart(lineChartData, selectedAttr) {
     console.log("xdata_min:" + xdata_min);
     console.log("xdata_max:" + xdata_max);
 
-
-    // var xScale = d3.scaleLinear().range([0, width]).domain([xdata_min-0.1*xdata_min, xdata_max+0.1*xdata_min])
     var xScale = d3.scaleLinear().range([0, innerWidthLine]).domain([xdata_min-0.001*xdata_min, xdata_max+0.001*xdata_min])
-
-    // For Crop production idx
-    // selectedAttr = "GDP per capita (current US$)", "Food production index (2004-2006 = 100)", "Crop production index (2004-2006 = 100)"
 
     selectedAttr = "Agricultural land (% of land area)"
     agri_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
@@ -66,9 +56,8 @@ function createLineChart(lineChartData, selectedAttr) {
     console.log("linedata_min:", linedata_min);
     console.log("linedata_max:", linedata_max);
 
-    // var yScale = d3.scaleLinear().range([height, 0]).domain([linedata_min-0.1*linedata_min, linedata_max+0.1*linedata_min])
-    var yScale = d3.scaleLinear().range([innerHeightLine, 0]).domain([linedata_min-0.01*linedata_min, linedata_max+0.01*linedata_min])
 
+    var yScale = d3.scaleLinear().range([innerHeightLine, 0]).domain([linedata_min-0.01*linedata_min, linedata_max+0.01*linedata_min])
 
     plotInner.append("g")
         .attr("transform", "translate(0," + innerHeightLine + ")")
@@ -116,7 +105,6 @@ function createLineChart(lineChartData, selectedAttr) {
         .text("Line Chart for attributes")
     
 
-
     selectedAttr = "Crop production index (2004-2006 = 100)"
     const line1 = d3.line()
         // .x(d => xScale(d.x)+xScale.bandwidth()/2)
@@ -126,8 +114,8 @@ function createLineChart(lineChartData, selectedAttr) {
         .y(d => yScale(d["Crop production index (2004-2006 = 100)"]))
         // .style({ 'stroke-width': '2px' })
         .curve(d3.curveLinear)
-
-
+    
+    
     // selectedAttr = "Food production index (2004-2006 = 100)"
     selectedAttr = "Agricultural land (% of land area)"
     const line2 = d3.line()
@@ -148,30 +136,40 @@ function createLineChart(lineChartData, selectedAttr) {
         .y(d => yScale(d["Food production index (2004-2006 = 100)"]))
         .curve(d3.curveLinear)
 
-
-    plotInner.append('path')
-        // .datum(data)
-        .datum(lineChartData)
-        .attr('d', line1)
-        .attr('fill', 'none')
-        .attr('stroke', 'teal')
-        .attr('stroke-width', '2')
-
-    plotInner.append('path')
-        // .datum(data)
-        .datum(lineChartData)
-        .attr('d', line2)
-        .attr('fill', 'none')
-        .attr('stroke', 'orange')
-        .attr('stroke-width', '2')
+    console.log("--------------------------")
+    // console.log($('#cropProdIdx').value)
     
-    plotInner.append('path')
-        // .datum(data)
-        .datum(lineChartData)
-        .attr('d', line3)
-        .attr('fill', 'none')
-        .attr('stroke', 'yellow')
-        .attr('stroke-width', '2')
+    if(document.getElementById("cropProdIdx").checked) {
+        console.log("Entered this condition!!! Yayyy")
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line1)
+            .attr('fill', 'none')
+            .attr('stroke', 'teal')
+            .attr('stroke-width', '2')
+    }
+    
+    if(document.getElementById("foodProdIdx").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line2)
+            .attr('fill', 'none')
+            .attr('stroke', 'orange')
+            .attr('stroke-width', '2')
+    }
+    
+    if(document.getElementById("gdp").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line3)
+            .attr('fill', 'none')
+            .attr('stroke', 'yellow')
+            .attr('stroke-width', '2')
+    }
+    
 
 }
 

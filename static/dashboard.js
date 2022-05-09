@@ -30,6 +30,28 @@ function resetDashboard(){
             console.log(err);
         }
     });
+
+    $.ajax({
+        type: "GET",
+        url: "/agriLineChart",
+        success: function(response) {
+            // console.log(" ============ Ajax success ===========");
+            // console.log(response);
+            lineChartData = JSON.parse(response)
+            // for (var i in lineChartData.features)
+            //     all_countries.push(lineChartData.features[i].properties.name);
+    
+            // worldData.features.forEach(element => {
+            //     locationIDMap[element["id"]] = element.properties.name
+            // });
+    
+            // createLineChart(lineChartData["agriLineData"], selected_attr)
+            createLineChart(lineChartData["agriLineData"], "Crop production index (2004-2006 = 100)")
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
 }
 
 
