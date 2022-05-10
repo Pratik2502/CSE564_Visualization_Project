@@ -162,6 +162,67 @@ def get_pcp_data():
         
     return json.dumps(pcp_data_temp.to_dict(orient="records"))
 
+
+
+@app.route("/agriPcp", methods=["POST" , "GET"])
+def get_agri_pcp_data():
+    global agri_df
+    
+    if(request.method == 'POST'):
+        dates = request.get_json()
+    
+    pcp_axis = [
+    #    'index', 'Country Name', 'Country Code', 'year',
+    #    'Access to electricity (% of population)',
+       'Access to electricity, rural (% of rural population)',
+       'Agricultural land (% of land area)',
+    #    'Agricultural land (sq. km)',
+    #    'Agricultural machinery, tractors',
+    #    'Agricultural machinery, tractors per 100 sq. km of arable land',
+    #    'Agricultural methane emissions (% of total)',
+    #    'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
+    #    'Agricultural nitrous oxide emissions (% of total)',
+    #    'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
+       'Agricultural raw materials exports (% of merchandise exports)',
+       'Agricultural raw materials imports (% of merchandise imports)',
+    #    'Agriculture, forestry, and fishing, value added (% of GDP)',
+    #    'Agriculture, forestry, and fishing, value added (current US$)',
+       'Arable land (% of land area)',
+    #    'Arable land (hectares per person)',
+    #    'Arable land (hectares)',
+    #    'Birth rate, crude (per 1,000 people)',
+    #    'Cereal production (metric tons)',
+    #    'Cereal yield (kg per hectare)',
+       'Crop production index (2004-2006 = 100)',
+    #    'Death rate, crude (per 1,000 people)',
+    #    'Employment in agriculture (% of total employment) (modeled ILO estimate)',
+    #    'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
+    #    'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
+       'Food production index (2004-2006 = 100)',
+    #    'Forest area (% of land area)', 'Forest area (sq. km)',
+       'GDP per capita (current US$)',
+    #    'Land area (sq. km)',
+    #    'Land under cereal production (hectares)',
+       'Livestock production index (2004-2006 = 100)',
+    #    'Mineral rents (% of GDP)',
+    #    'Mortality rate, infant (per 1,000 live births)',
+       'Permanent cropland (% of land area)',
+    #    'Population, total',
+    #    'Rural population', 'Rural population (% of total population)',
+       'Rural population growth (annual %)',
+    #    'Surface area (sq. km)'
+    ]
+
+    # pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
+    # pcp_data_temp["id"] = pcp_data_send["id"].unique()
+        
+    # return json.dumps(pcp_data_temp.to_dict(orient="records"))
+    dataToReturn = {}
+    dataToReturn["order"] = pcp_axis
+    dataToReturn["pcpData"] = agri_df.to_dict(orient="records")
+    return json.dumps(dataToReturn)
+
+
 @app.route("/worldmap", methods=["POST" , "GET"])
 def get_worldmap_data():
     
