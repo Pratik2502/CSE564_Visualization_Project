@@ -5,7 +5,7 @@ var marginsmds = {top: 50, right: 50, bottom: 5, left: 50};
 var innerWidthMDScorr = outerWidthMDScorr - marginsmds.left - marginsmds.right - 20
 var innerHeightMDScorr = outerHeightMDScorr - marginsmds.top - marginsmds.bottom - 20
 
-function plot_mds_corr(mds_corr_data) {
+function plot_mds_corr(mds_corr_data, mds_corr_values) {
     d3.select("#mdsCORRplot").html("")
     var plotOutercorr = d3.select("#mdsCORRplot").append("svg")
                     .attr("width", outerWidthMDScorr)
@@ -36,20 +36,59 @@ function plot_mds_corr(mds_corr_data) {
         .attr("font-size", "24px")
         .text("Attributes MDS Plot using Correlation")
 
-    mds_corr_data.forEach(function(p1, i1) {
-        mds_corr_data.forEach(function(p2, i2) {
-            if (i1 !== i2) {
+    // mds_corr_data.forEach(function(p1, i1) {
+    //     mds_corr_data.forEach(function(p2, i2) {
+    //         if (i1 !== i2) {
+    //             plotInnercorr.append("line")
+    //                 .attr('class', "line " + p1.fields + "-" + p2.fields + " " + p2.fields + "-" + p1.fields)
+    //                 .attr('x1', xScale(p1.x))
+    //                 .attr('y1', yScale(p1.y))
+    //                 .attr('x2', xScale(p2.x))
+    //                 .attr('y2', yScale(p2.y))
+    //                 .style('stroke', 'lightgrey')
+    //                 .style("visibility", "hidden")
+    //         }
+    //     });
+    // });
+
+    function getCoordinatesForAttr(attrName, mds_corr_data) {
+        coords = {}
+        coordObj = mds_corr_data.filter(objs => objs["fields"] == attrName);
+        console.log("          !!!!!!!!!!!   p1   !!!!!!!!!!             ");
+        console.log(coordObj);
+        if(coordObj == undefined || coordObj == null)
+            return null;
+        coords["x"] = coordObj[0]["x"];
+        coords["y"] = coordObj[0]["y"];
+        return coords
+    }
+
+
+    mds_corr_values.forEach(function(obj) {
+        
+        
+        console.log(obj);
+        let p1 = getCoordinatesForAttr(obj["field1"], mds_corr_data)
+        let p2 = getCoordinatesForAttr(obj["field2"], mds_corr_data)
+
+
+        if(typeof p1 === 'object' && p1 !== null && "x" in p1 && "y" in p1 && p1["x"] != undefined && p1["y"] != undefined) {
+            if(typeof p2 === 'object' && p2 !== null && "x" in p2 && "y" in p2  && p2["x"] != undefined  && p2["y"] != undefined) {
                 plotInnercorr.append("line")
-                    .attr('class', "line " + p1.fields + "-" + p2.fields + " " + p2.fields + "-" + p1.fields)
+                    // .attr('class', "line " + p1.fields + "-" + p2.fields + " " + p2.fields + "-" + p1.fields)
+                    .attr('class', "line " + obj["field1"] + "-" + obj["field2"] + " " + obj["field2"] + "-" + obj["field1"])
                     .attr('x1', xScale(p1.x))
                     .attr('y1', yScale(p1.y))
                     .attr('x2', xScale(p2.x))
                     .attr('y2', yScale(p2.y))
                     .style('stroke', 'lightgrey')
-                    .style("visibility", "hidden")
+                    .style("visibility", "visible")
             }
-        });
+        }
+
+        
     });
+
     var pcp_axis_order = []
     var top=-1;
 
@@ -124,31 +163,31 @@ function plot_mds_corr(mds_corr_data) {
         // }
     }
 
-    function checkVisited(label){
-        for(i=0; i<pcp_axis_order.length; i++){
-            if(label === pcp_axis_order[i]){
-                return true;
-            }
-        }
-        return false;
-    }
+    // function checkVisited(label){
+    //     for(i=0; i<pcp_axis_order.length; i++){
+    //         if(label === pcp_axis_order[i]){
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
     function handleMouseOver(d, i){
-        mds_corr_data.forEach(function(p, j) {
-            if (i !== j && !checkVisited(p.fields)) {
-                d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "visible")
-                d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "visible")
-            }
-        });
+        // mds_corr_data.forEach(function(p, j) {
+        //     if (i !== j && !checkVisited(p.fields)) {
+        //         d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "visible")
+        //         d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "visible")
+        //     }
+        // });
     }
 
     function handleMouseOut(d, i){
-        mds_corr_data.forEach(function(p, j) {
-            if (i !== j && !checkVisited(p.fields) ) {
-                d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "hidden")
-                d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "hidden")
-            }
-        });
+        // mds_corr_data.forEach(function(p, j) {
+        //     if (i !== j && !checkVisited(p.fields) ) {
+        //         d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "hidden")
+        //         d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "hidden")
+        //     }
+        // });
     }
 
     var points = plotInnercorr.selectAll("circles")

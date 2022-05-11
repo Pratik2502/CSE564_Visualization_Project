@@ -149,7 +149,8 @@ $.ajax({
     success: function(response) {
         // mds_corr = JSON.parse(response);
         console.log("mds_corr response received!!");
-        plot_mds_corr(response)
+        // plot_mds_corr(response)
+        plot_mds_corr(response["points"], response["corr_values"])
     },
     error: function(err) {
         console.log(err);
