@@ -54,6 +54,47 @@ bubble_df = pd.read_csv(bubble_data_path)
 hashtag_df = pd.read_csv(hashtags_data_path)
 
 agri_df = pd.read_excel(agri_data_path)
+top_10 = dict()
+bottom_10 = dict()
+
+def sort_countries(field_name):
+    global agri_df
+    # print(field_name)
+    # temp_df = agri_df.copy(deep = True)
+
+    filtered_df = agri_df.filter(['Country Name', field_name])
+
+    filtered_df.sort_values(field_name)
+    top = filtered_df.head(10)
+    bottom = filtered_df.tail(10)
+    # print('bottom: ', bottom)
+    # print('top: ', top)
+    return top, bottom
+
+@app.route("/agriBarData", methods=["POST" , "GET"])
+def agriBarData():
+    global agri_df
+    global top_10
+    global bottom_10
+
+    if(request.method == 'POST'):
+        reqbody = request.get_json()
+        field = reqbody["attribute"]
+    
+    return json.dumps(top_10[field].to_dict(orient="records"))
+
+
+
+def compute_10():
+    global bottom_10
+    global top_10
+    for field_name in df_country.columns[4:]:
+        top, bottom = sort_countries(field_name)
+        bottom_10[field_name] = bottom
+        top_10[field_name] = top
+
+    
+    
 
 def preprocess():
     global data
@@ -230,9 +271,9 @@ def get_agri_linechart_data():
 
 @app.route("/agrimds")
 def get_agri_mds():
-    df_country = pd.read_csv("/content/drive/MyDrive/CSE564 VIS/Cleaned_data.csv")
+    global agri_df
     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-    df_kept = df_country.drop(['Country Name', 'Country Code'], axis=1 )
+    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
@@ -247,6 +288,7 @@ def home():
 if(__name__ == "__main__"):
     preprocess()
     preprocess_pcp_data()
+    compute_10()
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
