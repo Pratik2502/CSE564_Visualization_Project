@@ -137,7 +137,4 @@ $.ajax({
     }
 });
 
-// temp password
-// srs9b9
-// drUsh#1812sbu1812
 
