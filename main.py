@@ -1,6 +1,9 @@
 import os
 
 from flask import Flask, redirect, url_for, render_template, jsonify, request
+from scipy.spatial.distance import pdist
+from scipy.spatial.distance import squareform
+
 import matplotlib.pyplot as plt 
 from sklearn.manifold import MDS
 import pandas as pd
@@ -58,6 +61,7 @@ top_10 = dict()
 bottom_10 = dict()
 
 country_avg_df = None
+df_mds_corr = None
 
 def compute_average():
     global agri_df
@@ -162,12 +166,37 @@ def preprocess_pcp_data():
 def get_agri_mds():
     # df_country = pd.read_csv("/content/drive/MyDrive/CSE564 VIS/Cleaned_data.csv")
     global agri_df
+    global df_mds_corr
     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
     df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
     return json.dumps(df_mds_corr.to_dict(orient="records"))
+
+
+def get_corr_values():
+    global df_mds_corr
+    mds_pc = MDS(n_components=2, dissimilarity='precomputed')
+    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
+    df_mds_corr['fields'] = df_kept.columns
+
+    temp_df = df_mds_corr.drop(columns = 'fields')
+    corr_matrix = squareform(pdist(temp_df))
+
+    res = []
+    for i, field in enumerate(df_mds_corr['fields']):
+        for j, field2 in enumerate(df_mds_corr['fields']):
+            res.append({'field1': field, 'field2': field2, 'value': corr_matrix[i][j]})
+
+    #pairwise = pd.Dataframe(corr_matrix, columns = df_mds_corr['fields'], index = df_mds_corr['fields'])
+    #return json.dumps(pairwise.to_dict(orient = "records"))
+
+    return res
+
+
 
 
 @app.route("/agriPcp", methods=["POST" , "GET"])
@@ -226,6 +255,9 @@ def get_agri_pcp_data():
     dataToReturn = {}
     dataToReturn["order"] = pcp_axis
     dataToReturn["pcpData"] = agri_df.to_dict(orient="records")
+    # dataToReturn['clusters'] = KMeans(n_clusters=2).fit(dataToReturn).labels_
+    # cluster1 = dataToReturn[dataToReturn["clusters"] == 0].sample(number // 2, replace = True)
+    # cluster2 = dataToReturn[dataToReturn["clusters"] == 1].sample(number - (number // 2), replace = True)
     return json.dumps(dataToReturn)
 
 
@@ -299,6 +331,7 @@ if(__name__ == "__main__"):
     preprocess()
     preprocess_pcp_data()
     compute_10()
+    get_corr_values()
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
