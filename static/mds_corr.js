@@ -53,7 +53,11 @@ function plot_mds_corr(mds_corr_data) {
     var top=-1;
 
     function handleClick(d, i){
-
+        console.log("++++++++ handling click ++++++++");
+        console.log(d);
+        console.log(i);
+        barChartAttr = d.fields;
+        resetBarChart();
         // var curr = d3.select(this)
         // curr.style("fill", "red")
         //     .attr('r', 8)

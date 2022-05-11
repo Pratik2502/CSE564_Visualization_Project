@@ -14,9 +14,11 @@ var avg_deaths = 0
 var avg_vaccinations = 0
 var statData = ""
 
+var transitionTime = 200;
 var currLine = "none"
 
 var maxPCPCountry = 0;
+var barChartAttr = "Food production index (2004-2006 = 100)";
 
 var locationIDMap = { "world": "World" }
 
@@ -154,4 +156,24 @@ $.ajax({
     }
 });
 
+
+function resetBarChart() {
+    $.ajax({
+        type: "POST",
+        url: "/agriBarData",
+        contentType: "application/json",
+        dataType: "json",
+        data: JSON.stringify({ "attribute": barChartAttr }),
+        success: function(response) {
+            // mds_corr = JSON.parse(response);
+            console.log("bar chart data response received!!");
+            setupBar(response, barChartAttr);
+            updateBar(response, barChartAttr);
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+resetBarChart()
 
