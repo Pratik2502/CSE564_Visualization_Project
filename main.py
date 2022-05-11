@@ -106,61 +106,6 @@ def preprocess_pcp_data():
     pcp_data = data.loc[data.id.isin(countries)].reset_index(drop=True)
     # pcp_data = pcp_data.loc[~pcp_data.id.isin(to_remove)].reset_index(drop=True)  
     
-@app.route("/pcp", methods=["POST" , "GET"])
-def get_pcp_data():
-    global pcp_data
-    
-    start_date = pd.to_datetime("2019-01-01")
-    end_date = pd.to_datetime("2022-11-23")
-    
-    if(request.method == 'POST'):
-        dates = request.get_json()
-
-        start_date = pd.to_datetime(dates["start"])
-        end_date = pd.to_datetime(dates["end"])
-
-    pcp_data_send = pcp_data.loc[(pcp_data.date>=start_date) & (pcp_data.date<=end_date)]
-    
-    # pcp_axis = ["id","location", 'gdp_per_capita', 'stringency_index', 'human_development_index', 'median_age', 'hospital_beds_per_thousand', 'positive_rate', 'new_cases_per_million', 'new_deaths_per_million', 'new_vaccinations_smoothed_per_million']
-    pcp_axis = [
-       'index', 'Country Name', 'Country Code', 'year',
-       'Access to electricity (% of population)',
-       'Access to electricity, rural (% of rural population)',
-       'Agricultural land (% of land area)', 'Agricultural land (sq. km)',
-       'Agricultural machinery, tractors',
-       'Agricultural machinery, tractors per 100 sq. km of arable land',
-       'Agricultural methane emissions (% of total)',
-       'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
-       'Agricultural nitrous oxide emissions (% of total)',
-       'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
-       'Agricultural raw materials exports (% of merchandise exports)',
-       'Agricultural raw materials imports (% of merchandise imports)',
-       'Agriculture, forestry, and fishing, value added (% of GDP)',
-       'Agriculture, forestry, and fishing, value added (current US$)',
-       'Arable land (% of land area)', 'Arable land (hectares per person)',
-       'Arable land (hectares)', 'Birth rate, crude (per 1,000 people)',
-       'Cereal production (metric tons)', 'Cereal yield (kg per hectare)',
-       'Crop production index (2004-2006 = 100)',
-       'Death rate, crude (per 1,000 people)',
-       'Employment in agriculture (% of total employment) (modeled ILO estimate)',
-       'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
-       'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
-       'Food production index (2004-2006 = 100)',
-       'Forest area (% of land area)', 'Forest area (sq. km)',
-       'GDP per capita (current US$)', 'Land area (sq. km)',
-       'Land under cereal production (hectares)',
-       'Livestock production index (2004-2006 = 100)',
-       'Mineral rents (% of GDP)',
-       'Mortality rate, infant (per 1,000 live births)',
-       'Permanent cropland (% of land area)', 'Population, total',
-       'Rural population', 'Rural population (% of total population)',
-       'Rural population growth (annual %)', 'Surface area (sq. km)'
-    ]
-
-    pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
-    pcp_data_temp["id"] = pcp_data_send["id"].unique()
-        
-    return json.dumps(pcp_data_temp.to_dict(orient="records"))
 
 
 
@@ -272,6 +217,93 @@ def get_agri_linechart_data():
     D = { "agriLineData":d1 }
     return json.dumps(D)
 
+@app.route("/agrimds")
+def get_agri_mds():
+    df_country = pd.read_csv("/content/drive/MyDrive/CSE564 VIS/Cleaned_data.csv")
+    mds_pc = MDS(n_components=2, dissimilarity='precomputed')
+    df_kept = df_country.drop(['Country Name', 'Country Code'], axis=1 )
+    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
+    df_mds_corr['fields'] = df_kept.columns
+    return json.dumps(df_mds_corr.to_dict(orient="records"))
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+if(__name__ == "__main__"):
+    preprocess()
+    preprocess_pcp_data()
+
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    app.run(debug=True, port=4001)
+
+
+
+
+#############################################################################################################
+
+'''
+@app.route("/pcp", methods=["POST" , "GET"])
+def get_pcp_data():
+    global pcp_data
+    
+    start_date = pd.to_datetime("2019-01-01")
+    end_date = pd.to_datetime("2022-11-23")
+    
+    if(request.method == 'POST'):
+        dates = request.get_json()
+
+        start_date = pd.to_datetime(dates["start"])
+        end_date = pd.to_datetime(dates["end"])
+
+    pcp_data_send = pcp_data.loc[(pcp_data.date>=start_date) & (pcp_data.date<=end_date)]
+    
+    # pcp_axis = ["id","location", 'gdp_per_capita', 'stringency_index', 'human_development_index', 'median_age', 'hospital_beds_per_thousand', 'positive_rate', 'new_cases_per_million', 'new_deaths_per_million', 'new_vaccinations_smoothed_per_million']
+    pcp_axis = [
+       'index', 'Country Name', 'Country Code', 'year',
+       'Access to electricity (% of population)',
+       'Access to electricity, rural (% of rural population)',
+       'Agricultural land (% of land area)', 'Agricultural land (sq. km)',
+       'Agricultural machinery, tractors',
+       'Agricultural machinery, tractors per 100 sq. km of arable land',
+       'Agricultural methane emissions (% of total)',
+       'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
+       'Agricultural nitrous oxide emissions (% of total)',
+       'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
+       'Agricultural raw materials exports (% of merchandise exports)',
+       'Agricultural raw materials imports (% of merchandise imports)',
+       'Agriculture, forestry, and fishing, value added (% of GDP)',
+       'Agriculture, forestry, and fishing, value added (current US$)',
+       'Arable land (% of land area)', 'Arable land (hectares per person)',
+       'Arable land (hectares)', 'Birth rate, crude (per 1,000 people)',
+       'Cereal production (metric tons)', 'Cereal yield (kg per hectare)',
+       'Crop production index (2004-2006 = 100)',
+       'Death rate, crude (per 1,000 people)',
+       'Employment in agriculture (% of total employment) (modeled ILO estimate)',
+       'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
+       'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
+       'Food production index (2004-2006 = 100)',
+       'Forest area (% of land area)', 'Forest area (sq. km)',
+       'GDP per capita (current US$)', 'Land area (sq. km)',
+       'Land under cereal production (hectares)',
+       'Livestock production index (2004-2006 = 100)',
+       'Mineral rents (% of GDP)',
+       'Mortality rate, infant (per 1,000 live births)',
+       'Permanent cropland (% of land area)', 'Population, total',
+       'Rural population', 'Rural population (% of total population)',
+       'Rural population growth (annual %)', 'Surface area (sq. km)'
+    ]
+
+    pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
+    pcp_data_temp["id"] = pcp_data_send["id"].unique()
+        
+    return json.dumps(pcp_data_temp.to_dict(orient="records"))
+
+
 @app.route("/linechart", methods=["POST" , "GET"])
 def get_linechart_data():
     global world_line_df
@@ -376,16 +408,4 @@ def get_wordcloud_data():
     word_cloud_df['count'] = np.log(word_cloud_df['count'])
     
     return json.dumps(word_cloud_df.to_dict(orient="records"))
-
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-
-if(__name__ == "__main__"):
-    preprocess()
-    preprocess_pcp_data()
-
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    app.run(debug=True, port=4001)
+'''
