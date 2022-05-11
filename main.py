@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, redirect, url_for, render_template, jsonify, request
 import matplotlib.pyplot as plt 
-
+from sklearn.manifold import MDS
 import pandas as pd
 import numpy as np
 import json
@@ -162,6 +162,17 @@ def get_pcp_data():
         
     return json.dumps(pcp_data_temp.to_dict(orient="records"))
 
+
+@app.route("/agrimds", methods=["POST" , "GET"])
+def get_agri_mds():
+    # df_country = pd.read_csv("/content/drive/MyDrive/CSE564 VIS/Cleaned_data.csv")
+    global agri_df
+    mds_pc = MDS(n_components=2, dissimilarity='precomputed')
+    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
+    df_mds_corr['fields'] = df_kept.columns
+    return json.dumps(df_mds_corr.to_dict(orient="records"))
 
 
 @app.route("/agriPcp", methods=["POST" , "GET"])

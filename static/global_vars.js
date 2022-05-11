@@ -138,3 +138,20 @@ $.ajax({
 });
 
 
+
+$.ajax({
+    type: "GET",
+    url: "/agrimds",
+    contentType: "application/json",
+    dataType: "json",
+    success: function(response) {
+        // mds_corr = JSON.parse(response);
+        console.log("mds_corr response received!!");
+        plot_mds_corr(response)
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+
