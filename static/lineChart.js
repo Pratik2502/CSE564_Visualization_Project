@@ -68,8 +68,8 @@ function createLineChart(lineChartData, selectedAttr) {
         // .attr("x", innerWidth / 2)
         .attr("x", innerWidthLine/2)
         .attr("text-anchor", "end")
-        .attr("stroke", "black")
-        .attr("fill", "black")
+        // .attr("stroke", "white")
+        .attr("fill", "white")
         .attr("font-size", "15px")
         .text("Year");
 
@@ -88,8 +88,8 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr("x", 50)
         .attr("dy", "-5.1em")
         .attr("text-anchor", "end")
-        .attr("stroke", "black")
-        .attr("fill", "black")
+        // .attr("stroke", "white")
+        .attr("fill", "white")
         .attr("font-size", "12px")
         // .text(selectedAttr);
         .text("Selected Attributes in %");
@@ -102,6 +102,7 @@ function createLineChart(lineChartData, selectedAttr) {
         // .attr("y", margins.top/2)
         .attr("y", 30)
         .attr("font-size", "22px")
+        .attr("fill", "white")
         .text("Line Chart for attributes")
     
 
