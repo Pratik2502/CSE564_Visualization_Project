@@ -81,6 +81,13 @@ def agriBarData():
         reqbody = request.get_json()
         field = reqbody["attribute"]
     
+    top10ForField = top_10[field]
+    response = []
+    for eachCountry in top10ForField:
+        newObj = {}
+        newObj["country"] = eachCountry
+        newObj["value"] = top
+
     return json.dumps(top_10[field].to_dict(orient="records"))
 
 
@@ -88,7 +95,7 @@ def agriBarData():
 def compute_10():
     global bottom_10
     global top_10
-    for field_name in df_country.columns[4:]:
+    for field_name in agri_df.columns[4:]:
         top, bottom = sort_countries(field_name)
         bottom_10[field_name] = bottom
         top_10[field_name] = top
@@ -269,15 +276,15 @@ def get_agri_linechart_data():
     D = { "agriLineData":d1 }
     return json.dumps(D)
 
-@app.route("/agrimds")
-def get_agri_mds():
-    global agri_df
-    mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
-    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
-    df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
-    df_mds_corr['fields'] = df_kept.columns
-    return json.dumps(df_mds_corr.to_dict(orient="records"))
+# @app.route("/agrimds")
+# def get_agri_mds():
+#     global agri_df
+#     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
+#     df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+#     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+#     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
+#     df_mds_corr['fields'] = df_kept.columns
+#     return json.dumps(df_mds_corr.to_dict(orient="records"))
 
 
 @app.route("/")
