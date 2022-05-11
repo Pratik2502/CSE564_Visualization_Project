@@ -57,20 +57,12 @@ agri_df = pd.read_excel(agri_data_path)
 top_10 = dict()
 bottom_10 = dict()
 
-country_avg_df = compute_average()
+country_avg_df = None
 
 def compute_average():
     global agri_df
-    
-    country_avg_df = agri_df.groupby('Country Name').mean()
-
-    # unique_countries = set(agri_df.country_name.unique())
-
-    # for field_name in agri_df.columns[4:]:
-    #     agri_df.groupby('Country Name')[field].mean()
-
-
-
+    global country_avg_df
+    country_avg_df = agri_df.groupby('Country Name', as_index=False).mean()
 
 
 def sort_countries(field_name):
@@ -79,7 +71,6 @@ def sort_countries(field_name):
     # temp_df = agri_df.copy(deep = True)
 
     filtered_df = country_avg_df.filter(['Country Name', field_name])
-
     filtered_df.sort_values(field_name)
     top = filtered_df.head(10)
     bottom = filtered_df.tail(10)
@@ -98,8 +89,8 @@ def agriBarData():
     
     top10ForField = top_10[field]
     top10ForField.rename(columns = {'Country Name':'country', field:'value'}, inplace = True)
-    print(top10ForField)
-    return json.dumps(top10ForField.to_dict(orient="records"))
+    jsonStr = json.dumps(top10ForField.to_dict(orient="records"))
+    return jsonStr
 
 
 
@@ -304,9 +295,9 @@ def home():
 
 
 if(__name__ == "__main__"):
+    compute_average()
     preprocess()
     preprocess_pcp_data()
-    compute_average()
     compute_10()
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
