@@ -75,9 +75,12 @@ def sort_countries(field_name):
     # temp_df = agri_df.copy(deep = True)
 
     filtered_df = country_avg_df.filter(['Country Name', field_name])
-    filtered_df.sort_values(field_name)
-    top = filtered_df.head(10)
-    bottom = filtered_df.tail(10)
+    sorted_df = filtered_df.sort_values(field_name, ascending=False)
+    # print('------------------ sorted df --------------')
+    # print(sorted_df)
+
+    top = sorted_df.head(10)
+    bottom = sorted_df.tail(10)
     # print('bottom: ', bottom)
     # print('top: ', top)
     return top, bottom
