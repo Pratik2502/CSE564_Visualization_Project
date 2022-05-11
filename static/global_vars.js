@@ -157,6 +157,22 @@ $.ajax({
 });
 
 
+// $.ajax({
+//     type: "GET",
+//     url: "/agriMdsWithCorr",
+//     contentType: "application/json",
+//     dataType: "json",
+//     success: function(response) {
+//         // mds_corr = JSON.parse(response);
+//         plot_mds_corr(response["points"], response["corr_values"])
+//     },
+//     error: function(err) {
+//         console.log(err);
+//     }
+// });
+
+
+
 function resetBarChart() {
     $.ajax({
         type: "POST",

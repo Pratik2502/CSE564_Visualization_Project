@@ -5,19 +5,26 @@ var marginsBar = {top: 50, right: 50, bottom: 5, left: 50};
 var innerWidthBarChart = outerWidthBarChart - marginsBar.left - marginsBar.right - 20
 var innerHeightBarChart = outerHeightBarChart - marginsBar.top - marginsBar.bottom - 20
 
-let plotOuterBar = d3
-    .select('svg#bar')
-    .attr('width', outerWidthBarChart)
-    .attr('height', outerHeightBarChart)
-  
-let plotInnerBar = plotOuterBar
-    .append('g')
-    .attr('id', 'inner-plot')
-    .attr('width', innerWidthBarChart)
-    .attr('height', innerHeightBarChart)
-    .attr('transform', 'translate(' + marginsBar.left + ',' + marginsBar.right + ')')
+var plotOuterBar;
+var plotInnerBar;
+
 
 function setupBar(barChartData, selectedColumn) {
+    d3.select("#bar").html("")
+
+    plotOuterBar = d3
+        .select('svg#bar')
+        .attr('width', outerWidthBarChart)
+        .attr('height', outerHeightBarChart)
+  
+    plotInnerBar = plotOuterBar
+        .append('g')
+        .attr('id', 'inner-plot')
+        .attr('width', innerWidthBarChart)
+        .attr('height', innerHeightBarChart)
+        .attr('transform', 'translate(' + marginsBar.left + ',' + marginsBar.right + ')')
+
+
     // var data = data_global;
     // const selectedColumn = getSelectedColname();
 
@@ -78,6 +85,8 @@ function setupBar(barChartData, selectedColumn) {
     .attr('y', outerHeightBarChart - marginsBar.bottom / 2)
     .attr('text-anchor', 'middle')
     // .text(longVars[xvar])
+    .attr("fill", "white")
+    .attr("font-size", "15")
     .text(selectedColumn)
 
     plotOuterBar
@@ -90,6 +99,8 @@ function setupBar(barChartData, selectedColumn) {
       'transform',
       `rotate(-90 ${marginsBar.left / 2} ${marginsBar.bottom + innerHeightBarChart / 2})`
     )
+    .attr("fill", "white")
+    .attr("font-size", "15")
     .text("Frequency")
 
   }

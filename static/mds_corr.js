@@ -32,6 +32,7 @@ function plot_mds_corr(mds_corr_data) {
     plotOutercorr.append("text")
         .attr("x", outerWidthMDScorr/2 - marginsmds.right - 180)
         .attr("y", marginsmds.top/2)
+        .attr("fill", "white")
         .attr("font-size", "24px")
         .text("Attributes MDS Plot using Correlation")
 
