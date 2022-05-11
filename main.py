@@ -172,8 +172,12 @@ def get_agri_mds():
     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
-    res = get_corr_values()
-    return {'points': json.dumps(df_mds_corr.to_dict(orient="records"), 'corr_values': res)}
+    res_corr_values = get_corr_values()
+    # return {'points': json.dumps(df_mds_corr.to_dict(orient="records"), 'corr_values': res)}
+    responseToSend = {}
+    responseToSend["points"] = df_mds_corr.to_dict(orient="records")
+    responseToSend["corr_values"] = res_corr_values
+    return json.dumps(responseToSend)
 
 
 def get_corr_values():
