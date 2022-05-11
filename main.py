@@ -172,16 +172,17 @@ def get_agri_mds():
     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
-    return json.dumps(df_mds_corr.to_dict(orient="records"))
+    res = get_corr_values()
+    return {'points': json.dumps(df_mds_corr.to_dict(orient="records"), 'corr_values': res)}
 
 
 def get_corr_values():
     global df_mds_corr
-    mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
-    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
-    df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
-    df_mds_corr['fields'] = df_kept.columns
+    # mds_pc = MDS(n_components=2, dissimilarity='precomputed')
+    # df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    # mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    # df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
+    # df_mds_corr['fields'] = df_kept.columns
 
     temp_df = df_mds_corr.drop(columns = 'fields')
     corr_matrix = squareform(pdist(temp_df))
@@ -331,7 +332,7 @@ if(__name__ == "__main__"):
     preprocess()
     preprocess_pcp_data()
     compute_10()
-    get_corr_values()
+    # get_corr_values()
 
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
