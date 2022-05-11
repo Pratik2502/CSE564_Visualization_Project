@@ -41,7 +41,8 @@ function plot_pcp(pcp_data, order){
             return key;
         };
     });
-    // console.log(dimensions);
+    console.log(" ---------- dimensions ---------- ");
+    console.log(dimensions);
     // Creata a x scale for each dimension
     x = d3.scalePoint()
         .domain(dimensions)
@@ -146,8 +147,8 @@ function plot_pcp(pcp_data, order){
             .append("text")
             .style("text-anchor", "middle")
             .attr("transform", "rotate(-10)")
-            .attr("fill", "black")
-            .attr("font-size", "12")
+            .attr("fill", "white")
+            .attr("font-size", "13")
             .attr("y", -9)
             .text(function (d) { return d; });
 
