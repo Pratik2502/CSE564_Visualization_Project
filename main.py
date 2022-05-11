@@ -82,13 +82,9 @@ def agriBarData():
         field = reqbody["attribute"]
     
     top10ForField = top_10[field]
-    response = []
-    for eachCountry in top10ForField:
-        newObj = {}
-        newObj["country"] = eachCountry
-        newObj["value"] = top
-
-    return json.dumps(top_10[field].to_dict(orient="records"))
+    top10ForField.rename(columns = {'Country Name':'country', field:'value'}, inplace = True)
+    print(top10ForField)
+    return json.dumps(top10ForField.to_dict(orient="records"))
 
 
 
