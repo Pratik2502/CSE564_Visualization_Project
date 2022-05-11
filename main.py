@@ -63,6 +63,8 @@ bottom_10 = dict()
 country_avg_df = None
 df_mds_corr = None
 
+selected_attributes = ['Crop production index (2004-2006 = 100)', 'Food production index (2004-2006 = 100)', 'GDP per capita (current US$)', 'Agricultural machinery, tractors', 'Access to electricity, rural (% of rural population)', 'Agricultural land (% of land area)', 'Rural population (% of total population)', 'Agricultural raw materials imports (% of merchandise imports)', 'Agricultural raw materials exports (% of merchandise exports)']
+
 def compute_average():
     global agri_df
     global country_avg_df
@@ -191,14 +193,19 @@ def get_corr_values():
     # df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     # df_mds_corr['fields'] = df_kept.columns
 
-    temp_df = df_mds_corr.drop(columns = 'fields')
-    corr_matrix = squareform(pdist(temp_df))
+    temp_df = df_mds_corr.loc[df_mds_corr['fields'].isin(selected_attributes)]
+    temp2_df = temp_df.drop(columns = 'fields')
+    print(temp_df)
+
+    corr_matrix = squareform(pdist(temp2_df))
 
     res = []
-    for i, field in enumerate(df_mds_corr['fields']):
-        for j, field2 in enumerate(df_mds_corr['fields']):
-            res.append({'field1': field, 'field2': field2, 'value': corr_matrix[i][j]})
+    for i, field in enumerate(temp_df['fields']):
+        for j, field2 in enumerate(temp_df['fields']):
+            if i > j:
+                res.append({'field1': field, 'field2': field2, 'value': corr_matrix[i][j]})
 
+    print(res)
     #pairwise = pd.Dataframe(corr_matrix, columns = df_mds_corr['fields'], index = df_mds_corr['fields'])
     #return json.dumps(pairwise.to_dict(orient = "records"))
 
