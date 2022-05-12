@@ -74,10 +74,10 @@
 
             <div class="col-sm-6" style="padding-left: 5px;">
                 <div class="dash-unit" title="Time-Series line plot">
-                    <div class='row'>
-                        <dtitle id="lineTitle">Agricultural/Growth parameters of <span id="selectedCountryName">UNITED STATES OF AMERICA</span></dtitle>
+                    <div >
+                        <dtitle id="worldTitle">Agricultural/Growth parameters of <span id="selectedCountryName">UNITED STATES OF AMERICA</span></dtitle>
+                        <hr class="dash_unit_title_sep">
 
-                        <hr>
                         <div class='row'>
                             <div id="linechart"></div>
 
@@ -185,7 +185,7 @@
             <div class="col-sm-4" style="padding-right: 5px;">
                 <div class="dash-unit">
                     <dtitle id="worldTitle">Parallel Coordinate Plot</dtitle>
-                    <hr>
+                    <hr class="dash_unit_title_sep">
 
                     <div align="center">
                         <div id="pcplot"></div>
@@ -197,12 +197,16 @@
 
             <div id="MDScorr-PCP" class="col-sm-4">
                 <div class="dash-unit">
+                    <dtitle id="worldTitle">Attribute MDS Plot using correlation</dtitle>
+                    <hr class="dash_unit_title_sep">
                     <div id="mdsCORRplot"></div>
                 </div>
             </div>
 
             <div id="Bar-Chart" class="col-sm-4">
                 <div class="dash-unit">
+                    <dtitle id="worldTitle">Top Countries With highest</dtitle>
+                    <hr class="dash_unit_title_sep">
                     <svg id="bar"></svg>
                 </div>
             </div>

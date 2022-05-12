@@ -56,6 +56,13 @@ body {
     margin-top: 3px;
 }
 
+.dash_unit_title_sep {
+    border: 0;
+    border-top: 1px solid #151515;
+    border-top-style: dashed;
+    margin-top: 3px;
+}
+
 .button {
     background-color: #d63939;
     border: none;
