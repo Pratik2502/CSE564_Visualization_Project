@@ -1,6 +1,6 @@
 var outerWidthBarChart = 715, outerHeightBarChart = 5/6 * outerWidthBarChart
 
-var marginsBar = {top: 50, right: 50, bottom: 70, left: 90};
+var marginsBar = {top: 50, right: 50, bottom: 170, left: 90};
 
 var innerWidthBarChart = outerWidthBarChart - marginsBar.left - marginsBar.right - 20
 var innerHeightBarChart = outerHeightBarChart - marginsBar.top - marginsBar.bottom - 20
@@ -77,6 +77,7 @@ function setupBar(barChartData, selectedColumn) {
     .attr('class', 'x axis') // note: two classes; handy!
     .call(xCatAxis)
     .selectAll("text").attr("transform","translate(0,30)rotate(-20)")
+    .style("font-size", "18px")
 
     plotInnerBar
     .append('g')
@@ -84,9 +85,12 @@ function setupBar(barChartData, selectedColumn) {
     .attr("stroke", "white")
     .attr('class', 'y axis')
     .call(yCatAxis)
+    .selectAll("text")
+    .style("font-size", "18px")
     
     plotOuterBar
     .append('text')
+    .style("font-size", "24px")
     .attr('class', 'x axis')
     .attr('x', marginsBar.left + innerWidthBarChart / 2)
     .attr('y', outerHeightBarChart - marginsBar.bottom / 2)
@@ -98,9 +102,10 @@ function setupBar(barChartData, selectedColumn) {
 
     plotOuterBar
     .append('text')
+    .style("font-size", "24px")
     .attr('class', 'y axis')
     // .attr('x', marginsBar.left / 2 - 70)
-    .attr('x', -20)
+    .attr('x', 90)
     .attr('y', marginsBar.bottom + innerHeightBarChart / 2 - 20)
     .attr('text-anchor', 'middle')
     .attr(
