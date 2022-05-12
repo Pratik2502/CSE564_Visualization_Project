@@ -50,7 +50,7 @@ function createLineChart(lineChartData, selectedAttr) {
     food_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
     food_linedata_min = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    linedata_min = Math.min(agri_linedata_min, crop_linedata_min, food_linedata_max)
+    linedata_min = Math.min(agri_linedata_min, crop_linedata_min, food_linedata_min)
     linedata_max = Math.max(agri_linedata_max, crop_linedata_max, food_linedata_max)
 
     console.log("linedata_min:", linedata_min);
