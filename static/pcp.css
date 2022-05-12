@@ -32,7 +32,8 @@
 }
 
 #mdsCORRplot {
-margin-top: 70px;
+    margin: 40px;
+    /* width: 500px; */
 }
 
 #reset_pcp button {

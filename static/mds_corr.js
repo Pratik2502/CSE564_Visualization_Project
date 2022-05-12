@@ -29,12 +29,12 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
     xScale.domain([d3.min(mds_corr_data, function(d){ return d.x }), d3.max(mds_corr_data, function(d){ return d.x })]);
     yScale.domain([d3.min(mds_corr_data, function(d){ return d.y }), d3.max(mds_corr_data, function(d){ return d.y })]);
 
-    plotOutercorr.append("text")
-        .attr("x", outerWidthMDScorr/2 - marginsmds.right - 180)
-        .attr("y", marginsmds.top/2)
-        .attr("fill", "white")
-        .attr("font-size", "24px")
-        .text("Attributes MDS Plot using Correlation")
+    // plotOutercorr.append("text")
+    //     .attr("x", outerWidthMDScorr/2 - marginsmds.right - 180)
+    //     .attr("y", marginsmds.top/2)
+    //     .attr("fill", "white")
+    //     .attr("font-size", "24px")
+    //     .text("Attributes MDS Plot using Correlation")
 
     function getCoordinatesForAttr(attrName, mds_corr_data) {
         coords = {}

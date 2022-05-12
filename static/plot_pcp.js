@@ -1,4 +1,4 @@
-var outerWidthpcp = 800, outerHeightpcp = 600,
+var outerWidthpcp = 1000, outerHeightpcp = 600,
     marginspcp = {top: 50, right: 50, bottom: 5, left: 50},
     innerWidthpcp = outerWidthpcp - marginspcp.left - marginspcp.right,
     innerHeightpcp = outerHeightpcp - marginspcp.top - marginspcp.bottom;

@@ -47,6 +47,7 @@ body {
     margin: 8px;
     height: inherit;
     letter-spacing: normal;
+    font-size: 22px;
 }
 
 .dash-unit hr {
