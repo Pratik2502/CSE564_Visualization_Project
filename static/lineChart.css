@@ -19,3 +19,8 @@
 .bubbles:hover {
     stroke: black;
 }
+
+.checkbox_panel {
+    background-color: gray;
+    margin: auto;
+}

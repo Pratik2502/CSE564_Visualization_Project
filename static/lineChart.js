@@ -38,20 +38,57 @@ function createLineChart(lineChartData, selectedAttr) {
 
     var xScale = d3.scaleLinear().range([0, innerWidthLine]).domain([xdata_min-0.001*xdata_min, xdata_max+0.001*xdata_min])
 
-    selectedAttr = "agricultural_land_percent"
-    agri_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
-    agri_linedata_min = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    selectedAttr = "crop_production_index"
-    crop_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
-    crop_linedata_min = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    selectedAttr = "food_production_index"
-    food_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
-    food_linedata_min = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    linedata_min = Math.min(agri_linedata_min, crop_linedata_min, food_linedata_min)
-    linedata_max = Math.max(agri_linedata_max, crop_linedata_max, food_linedata_max)
+
+    // FIRST PANEL 
+
+    selectedAttr = "normalised_crop_production_index"
+    cropProdIdxMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    cropProdIdxMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    selectedAttr = "normalised_food_production_index"
+    foodProdIdxMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    foodProdIdxMin = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    selectedAttr = "normalised_Arable_land_percent"
+    arableLandMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    arableLandMin = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    selectedAttr = "normalised_agricultural_land_percent"
+    agriculturalLandMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    agriculturalLandMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    selectedAttr = "normalised_Access_to_electricity_rural_percent"
+    accessToElectricityMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    accessToElectricityMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    // agriMachinery
+    selectedAttr = "normalised_agricultural_machinery_tractors_100_sqkm"
+    agriMachineryMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    agriMachineryMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+
+
+    // FIRST PANEL 
+    selectedAttr = "normalised_GDP_per_capita"
+    gdpPerCapitaMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    gdpPerCapitaMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    // agriImports
+    selectedAttr = "normalised_Agricultural_raw_materials_imports_percent"
+    agriImportsMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    agriImportsMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+    selectedAttr = "normalised_Agricultural_raw_materials_exports_percent"
+    agriExportsMax = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
+    agriExportsMin = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
+
+
+
+    linedata_min = Math.min(cropProdIdxMin, foodProdIdxMin, arableLandMin, agriculturalLandMin, accessToElectricityMin, agriMachineryMin, gdpPerCapitaMin, agriImportsMin, agriExportsMin)
+    linedata_max = Math.max(cropProdIdxMax, foodProdIdxMax, arableLandMax, agriculturalLandMax, accessToElectricityMax, agriMachineryMax, gdpPerCapitaMax, agriImportsMax, agriExportsMax)
 
     console.log("linedata_min:", linedata_min);
     console.log("linedata_max:", linedata_max);
@@ -106,36 +143,72 @@ function createLineChart(lineChartData, selectedAttr) {
         .text("Line Chart for attributes")
     
 
-    selectedAttr = "crop_production_index"
+
+
+    selectedAttr = "normalised_crop_production_index"
     const line1 = d3.line()
-        // .x(d => xScale(d.x)+xScale.bandwidth()/2)
-        // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
-        // .y(d => yScale(d.y))
-        .y(d => yScale(d["crop_production_index"]))
-        // .style({ 'stroke-width': '2px' })
+        .y(d => yScale(d["normalised_crop_production_index"]))
         .curve(d3.curveLinear)
     
     
     // selectedAttr = "food_production_index"
-    selectedAttr = "agricultural_land_percent"
+    selectedAttr = "normalised_food_production_index"
     const line2 = d3.line()
-        // .x(d => xScale(d.x)+xScale.bandwidth()/2)
-        // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
-        // .y(d => yScale(d.y))
-        .y(d => yScale(d["agricultural_land_percent"]))
+        .y(d => yScale(d["normalised_food_production_index"]))
         .curve(d3.curveLinear)
 
 
     // selectedAttr = "food_production_index"
+    selectedAttr = "normalised_Arable_land_percent"
     const line3 = d3.line()
-        // .x(d => xScale(d.x)+xScale.bandwidth()/2)
-        // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
-        // .y(d => yScale(d.y))
-        .y(d => yScale(d["food_production_index"]))
+        .y(d => yScale(d["normalised_Arable_land_percent"]))
         .curve(d3.curveLinear)
+
+
+    
+    selectedAttr = "normalised_agricultural_land_percent"
+    const line4 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_agricultural_land_percent"]))
+        .curve(d3.curveLinear)
+    
+    selectedAttr = "normalised_Access_to_electricity_rural_percent"
+    const line5 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_Access_to_electricity_rural_percent"]))
+        .curve(d3.curveLinear)
+    
+
+    selectedAttr = "normalised_agricultural_machinery_tractors_100_sqkm"
+    const line6 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_agricultural_machinery_tractors_100_sqkm"]))
+        .curve(d3.curveLinear)
+
+
+
+
+    selectedAttr = "normalised_GDP_per_capita"
+    const line7 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_GDP_per_capita"]))
+        .curve(d3.curveLinear)
+
+
+    selectedAttr = "normalised_Agricultural_raw_materials_imports_percent"
+    const line8 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_Agricultural_raw_materials_imports_percent"]))
+    .curve(d3.curveLinear)
+
+    selectedAttr = "normalised_Agricultural_raw_materials_exports_percent"
+    const line9 = d3.line()
+        .x(d => xScale(d["year"]) + 3)
+        .y(d => yScale(d["normalised_Agricultural_raw_materials_exports_percent"]))
+    .curve(d3.curveLinear)
 
     console.log("--------------------------")
     // console.log($('#cropProdIdx').value)
@@ -158,38 +231,67 @@ function createLineChart(lineChartData, selectedAttr) {
     plotInner.call(circleTipLineChart);
 
 
+
+    var color = d3.scaleOrdinal(d3.schemeSet2);
+
+
+
+    function processObjCircleData(lineChartData, attributeName, attributeNumber, circleData, colorScale) {
+        lineChartData.forEach(d => {
+            let newObj = {}
+            newObj["cx"] = xScale(d["year"]) + 3
+            newObj["cy"] = yScale(d[attributeName])
+            newObj["fill"] = colorScale(attributeNumber)
+            newObj["Attribute"] = attributeName
+            newObj["dataObj"] = d
+            circleData.push(newObj)
+        });
+    }
+
+
     // Circles in line chart
 
     var circleData = []
-    lineChartData.forEach(d => {
-        let newObj = {}
-        newObj["cx"] = xScale(d["year"]) + 3
-        newObj["cy"] = yScale(d["crop_production_index"])
-        newObj["fill"] = 'teal'
-        newObj["Attribute"] = "crop_production_index"
-        newObj["dataObj"] = d
-        circleData.push(newObj)
-    });
+    // lineChartData.forEach(d => {
+    //     let newObj = {}
+    //     newObj["cx"] = xScale(d["year"]) + 3
+    //     newObj["cy"] = yScale(d["normalised_crop_production_index"])
+    //     // newObj["fill"] = 'teal'
+    //     newObj["fill"]
+    //     newObj["Attribute"] = "normalised_crop_production_index"
+    //     newObj["dataObj"] = d
+    //     circleData.push(newObj)
+    // });
+    
+    processObjCircleData(lineChartData, "normalised_crop_production_index", 0, circleData, color);
+    processObjCircleData(lineChartData, "normalised_food_production_index", 1, circleData, color);
+    processObjCircleData(lineChartData, "normalised_Arable_land_percent", 2, circleData, color);
+    processObjCircleData(lineChartData, "normalised_agricultural_land_percent", 3, circleData, color);
+    processObjCircleData(lineChartData, "normalised_Access_to_electricity_rural_percent", 4, circleData, color);
+    processObjCircleData(lineChartData, "normalised_agricultural_machinery_tractors_100_sqkm", 5, circleData, color);
+    processObjCircleData(lineChartData, "normalised_GDP_per_capita", 6, circleData, color);
+    processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_imports_percent", 7, circleData, color);
+    processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_exports_percent", 8, circleData, color);
 
-    lineChartData.forEach(d => {
-        let newObj = {}
-        newObj["cx"] = xScale(d["year"]) + 3
-        newObj["cy"] = yScale(d["food_production_index"])
-        newObj["fill"] = 'yellow'
-        newObj["Attribute"] = "food_production_index"
-        newObj["dataObj"] = d
-        circleData.push(newObj)
-    });
+    // lineChartData.forEach(d => {
+    //     let newObj = {}
+    //     newObj["cx"] = xScale(d["year"]) + 3
+    //     newObj["cy"] = yScale(d["food_production_index"])
+    //     newObj["fill"] = 'yellow'
+    //     newObj["Attribute"] = "food_production_index"
+    //     newObj["dataObj"] = d
+    //     circleData.push(newObj)
+    // });
 
-    lineChartData.forEach(d => {
-        let newObj = {}
-        newObj["cx"] = xScale(d["year"]) + 3
-        newObj["cy"] = yScale(d["agricultural_land_percent"])
-        newObj["fill"] = 'orange'
-        newObj["Attribute"] = "agricultural_land_percent"
-        newObj["dataObj"] = d
-        circleData.push(newObj)
-    });
+    // lineChartData.forEach(d => {
+    //     let newObj = {}
+    //     newObj["cx"] = xScale(d["year"]) + 3
+    //     newObj["cy"] = yScale(d["agricultural_land_percent"])
+    //     newObj["fill"] = 'orange'
+    //     newObj["Attribute"] = "agricultural_land_percent"
+    //     newObj["dataObj"] = d
+    //     circleData.push(newObj)
+    // });
 
     function handleMouseOverCircle(d) {
         circleTipLineChart.show(d);
@@ -236,11 +338,11 @@ function createLineChart(lineChartData, selectedAttr) {
             .datum(lineChartData)
             .attr('d', line1)
             .attr('fill', 'none')
-            .attr('stroke', 'teal')
+            .attr('stroke', color(0))
             .attr('stroke-width', '2')
         
         // plotInner.selectAll('.pointcrop_production_index').style("visibility", "hidden")
-        plotInner.selectAll(".point_crop_production_index")
+        plotInner.selectAll(".point_normalised_crop_production_index")
             .attr("opacity", 1)
     }
     
@@ -250,10 +352,66 @@ function createLineChart(lineChartData, selectedAttr) {
             .datum(lineChartData)
             .attr('d', line2)
             .attr('fill', 'none')
-            .attr('stroke', 'orange')
+            .attr('stroke', color(1))
             .attr('stroke-width', '2')
         
-        plotInner.selectAll(".point_food_production_index")
+        plotInner.selectAll(".point_normalised_food_production_index")
+            .attr("opacity", 1)
+    }
+    
+    if(document.getElementById("arableLand").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line3)
+            .attr('fill', 'none')
+            .attr('stroke', color(2))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_Arable_land_percent")
+            .attr("opacity", 1)
+    }
+
+    if(document.getElementById("agriculturalLand").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line4)
+            .attr('fill', 'none')
+            .attr('stroke', color(3))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_agricultural_land_percent")
+            .attr("opacity", 1)
+    }
+
+    if(document.getElementById("accessToElectricity").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line5)
+            .attr('fill', 'none')
+            .attr('stroke', color(4))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_Access_to_electricity_rural_percent")
+            .attr("opacity", 1)
+    }
+
+    if(document.getElementById("agriMachinery").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line6)
+            .attr('fill', 'none')
+            .attr('stroke', color(5))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_agricultural_machinery_tractors_100_sqkm")
             .attr("opacity", 1)
     }
     
@@ -261,16 +419,43 @@ function createLineChart(lineChartData, selectedAttr) {
         plotInner.append('path')
             // .datum(data)
             .datum(lineChartData)
-            .attr('d', line3)
+            .attr('d', line7)
             .attr('fill', 'none')
-            .attr('stroke', 'yellow')
+            .attr('stroke', color(6))
             .attr('stroke-width', '2')
         
         // agricultural_land_percent
-        plotInner.selectAll(".point_agricultural_land_percent")
+        plotInner.selectAll(".point_normalised_GDP_per_capita")
             .attr("opacity", 1)
     }
 
+    if(document.getElementById("agriImports").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line8)
+            .attr('fill', 'none')
+            .attr('stroke', color(7))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_Agricultural_raw_materials_imports_percent")
+            .attr("opacity", 1)
+    }
+
+    if(document.getElementById("agriExports").checked) {
+        plotInner.append('path')
+            // .datum(data)
+            .datum(lineChartData)
+            .attr('d', line9)
+            .attr('fill', 'none')
+            .attr('stroke', color(8))
+            .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        plotInner.selectAll(".point_normalised_Agricultural_raw_materials_exports_percent")
+            .attr("opacity", 1)
+    }
 
     worldMapTrigger.registerListener(function(val) {
         resetLineChart()

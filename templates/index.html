@@ -77,20 +77,61 @@
                         </select> -->
                         <hr>
                         <div id="linechart"></div>
-                        <div>
+
+                        <div class="checkbox_panel">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetLineChart()">
-                                <label class="form-check-label" for="cropProdIdx">crop_production_index</label><br>
+                                <label class="form-check-label" for="cropProdIdx">Crop Production Index</label><br>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetLineChart()">
-                                <label class="form-check-label" for="foodProdIdx">food_production_index</label><br>
+                                <label class="form-check-label" for="foodProdIdx">Food production index</label><br>
                             </div>
+                        </div>
+                        <div class="checkbox_panel">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="arableLand" value="ArableLand" onchange="resetLineChart()">
+                                <label class="form-check-label" for="arableLand">Arable Land (%)</label><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agriculturalLand" value="AgriculturalLand" onchange="resetLineChart()">
+                                <label class="form-check-label" for="agriculturalLand">Agricultural Land (%)</label><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="accessToElectricity" value="AccessToElectricity" onchange="resetLineChart()">
+                                <label class="form-check-label" for="accessToElectricity">Access to Electricity (% rural areas)</label><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agriMachinery" value="AgriMachinery" onchange="resetLineChart()">
+                                <label class="form-check-label" for="agriMachinery">Agricultural Machinery</label><br>
+                            </div>
+
+                        </div>
+
+                        <div class="checkbox_panel">
+                            <!-- <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetLineChart()">
+                                <label class="form-check-label" for="cropProdIdx">Crop Production Index</label><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetLineChart()">
+                                <label class="form-check-label" for="foodProdIdx">Food production index</label><br>
+                            </div> -->
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gdp" value="GDP" onchange="resetLineChart()">
                                 <label class="form-check-label" for="gdp">GDP per capita (current US$)</label><br>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agriImports" value="agriculturalRawMaterialImport" onchange="resetLineChart()">
+                                <label class="form-check-label" for="agriImports">Agricultural Raw Material Imports</label><br>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="agriExports" value="GDP" onchange="resetLineChart()">
+                                <label class="form-check-label" for="agriExports">Agricultural Raw Material Exports</label><br>
+                            </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
