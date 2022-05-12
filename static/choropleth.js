@@ -319,14 +319,7 @@ function createChoropleth(data, attr, countries) {
 
                 worldMapTrigger.a = d.id
 
-
-                var lineTitle = document.getElementById("lineTitle").innerHTML.split(" ")
-
-                lineTitle[1] = selected_attr
-                lineTitle[6] = selected_start_date
-                lineTitle[8] = selected_end_date
-
-                document.getElementById("lineTitle").innerHTML = "Average " + selected_attr + " of " + locationIDMap[worldmap_country];
+                document.getElementById("selectedCountryName").innerHTML = locationIDMap[worldmap_country];
 
 
                 for (i = 0; i < countries_path_arr.length; i++) {
