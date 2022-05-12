@@ -1,6 +1,6 @@
 var outerWidthLine = 980,
-    outerHeightLine = 420
-var marginUpperLineChart = { top: 90, right: 90, bottom: 10, left: 170 }
+    outerHeightLine = 485
+var marginUpperLineChart = { top: 90, right: 90, bottom: 30, left: 170 }
 var marginBottomLineChart = { top: 255, right: 300, bottom: 50, left: 40 }
 var innerWidthLine = outerWidthLine - marginUpperLineChart.left - marginUpperLineChart.right
 var innerHeightLine = outerHeightLine - marginUpperLineChart.top - marginUpperLineChart.bottom - 20
@@ -112,9 +112,11 @@ function createLineChart(lineChartData, selectedAttr) {
         .call(d3.axisBottom(xScale))
         .append("text")
         // .attr("y", margins.bottom / 2)
-        .attr("y", marginBottomLineChart.bottom)
+        // .attr("y", marginBottomLineChart.bottom)
+        .attr("y", 40)
         // .attr("x", innerWidth / 2)
-        .attr("x", innerWidthLine/2)
+        // .attr("x", innerWidthLine/2)
+        .attr("x", 400)
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
@@ -131,14 +133,15 @@ function createLineChart(lineChartData, selectedAttr) {
         .append("text")
         .attr("transform", "rotate(-90)")
         // .attr("y", margins.left / 2 - 20)
+        // marginUpperLineChart
         .attr("y", 10)
         // .attr("x", - innerHeight / 2 + 100)
-        .attr("x", 50)
+        .attr("x", -50)
         .attr("dy", "-5.1em")
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "12px")
+        .attr("font-size", "18px")
         // .text(selectedAttr);
         .text("Selected Attributes in %");
 
@@ -146,9 +149,9 @@ function createLineChart(lineChartData, selectedAttr) {
     plotOuter.append("text")
         // .attr("x", outerWidth/4 - margins.right)
         // .attr("x", outerWidthLine/4 - marginUpperLineChart.right)
-        .attr("x", 100)
+        .attr("x", 350)
         // .attr("y", margins.top/2)
-        .attr("y", 30)
+        .attr("y", 60)
         .attr("font-size", "22px")
         .attr("fill", "white")
         .text("Line Chart for attributes")
