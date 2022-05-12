@@ -76,17 +76,10 @@
                 <div class="dash-unit" title="Time-Series line plot">
                     <div class='row'>
                         <dtitle id="lineTitle">AVERAGE CROP_PRODUCTION_IDX OF A COUNTRY</dtitle>
-                        <!-- <select id='covidattr'>
-                                <option value="new_cases">Daily Cases</option>
-                                <option value="new_deaths">Daily Deaths</option>
-                                <option value="new_vaccinations">Daily Vaccinations</option>
-                                <option value="crop_production_idx">Crop Production Index</option>
-                        </select> -->
+
                         <hr>
                         <div class='row'>
                         <div id="linechart"></div>
-
-
 
                         <div class="panels_column">
 
@@ -102,15 +95,6 @@
                                         <input type="checkbox" name="foodProdIdx" id="foodProdIdx" value="FoodProdIdx"
                                             onchange="resetLineChart()">Food production index<br>
                                     </label>
-
-                                    <!-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="cropProdIdx" value="CropProdIdx" checked onchange="resetLineChart()">
-                                    <label class="form-check-label" for="cropProdIdx">Crop Production Index</label><br>
-                                </div> -->
-                                    <!-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="foodProdIdx" value="FoodProdIdx" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="foodProdIdx">Food production index</label><br>
-                                </div> -->
                                 </div>
                             </div>
 
@@ -145,29 +129,7 @@
                             </div>
 
 
-
-
-
                             <div class="checkbox_panel">
-
-                                <!-- <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gdp" value="GDP"
-                                        onchange="resetLineChart()">
-                                    <label class="form-check-label" for="gdp">GDP per capita (current US$)</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriImports"
-                                        value="agriculturalRawMaterialImport" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriImports">Agricultural Raw Material
-                                        Imports</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriExports" value="GDP"
-                                        onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriExports">Agricultural Raw Material
-                                        Exports</label><br>
-                                </div> -->
-
 
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-secondary" id="gdpLabel" onclick="clickedLabel(this);">
@@ -191,61 +153,6 @@
                                 </div>
 
                             </div>
-                            <!-- <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary active" id="arableLandLabel">
-                                    <input type="checkbox" name="arableLand" id="arableLand" value="arableLand" onchange="resetLineChart()">Arable Land (%)<br>
-                                </label>
-                                <label class="btn btn-secondary" id="agriculturalLandLabel">
-                                    <input type="checkbox" name="agriculturalLand" id="agriculturalLand" value="AgriculturalLand" onchange="resetLineChart()">Agricultural Land (%)<br>
-                                </label>
-                                <label class="btn btn-secondary" id="accessToElectricityLabel">
-                                    <input type="checkbox" name="accessToElectricity" id="accessToElectricity" value="AccessToElectricity" onchange="resetLineChart()">Access to Electricity (% rural areas)<br>
-                                </label>
-                                <label class="btn btn-secondary" id="agriMachineryLabel">
-                                    <input type="checkbox" name="agriMachinery" id="agriMachinery" value="AgriMachinery" onchange="resetLineChart()"><br>
-                                </label>
-                            </div> -->
-
-                            <!-- <div class="checkbox_panel">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="arableLand" value="ArableLand" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="arableLand">Arable Land (%)</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriculturalLand" value="AgriculturalLand" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriculturalLand">Agricultural Land (%)</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="accessToElectricity" value="AccessToElectricity" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="accessToElectricity">Access to Electricity (% rural areas)</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriMachinery" value="AgriMachinery" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriMachinery">Agricultural Machinery</label><br>
-                                </div>
-                            </div> -->
-
-                            <!-- <div class="checkbox_panel">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gdp" value="GDP"
-                                        onchange="resetLineChart()">
-                                    <label class="form-check-label" for="gdp">GDP per capita (current US$)</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriImports"
-                                        value="agriculturalRawMaterialImport" onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriImports">Agricultural Raw Material
-                                        Imports</label><br>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="agriExports" value="GDP"
-                                        onchange="resetLineChart()">
-                                    <label class="form-check-label" for="agriExports">Agricultural Raw Material
-                                        Exports</label><br>
-                                </div>
-                            </div> -->
-
-
 
                         </div>
                     </div>
@@ -270,12 +177,6 @@
                     <div align="center">
                         <div id="pcplot"></div>
                     </div>
-                    <!-- <div class='row'>
-                    </div>
-                    <div class="row" title="Choropleth">
-                        <div id="worldmap-legend-svg" class="col-sm-1"></div>
-                        <div id="worldmap" class="col-sm-11"></div>
-                    </div> -->
 
                 </div>
             </div>
@@ -283,9 +184,6 @@
 
             <div id="MDScorr-PCP" class="col-sm-4">
                 <div class="dash-unit">
-                    <!-- <div id="reset_pcp">
-                        <button class="mds_corr" onclick="reset_pcp_corr()">Reset</button>
-                    </div> -->
                     <div id="mdsCORRplot"></div>
                 </div>
             </div>
