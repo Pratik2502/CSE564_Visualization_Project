@@ -55,7 +55,7 @@ function worldMap(dataset, attr, countries) {
                 // Crop production index \(2004-2006 = 100\)
                 attr_str = "Crop Production Index"
             }
-            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>" + attr_str + ": </strong><span class='details'>" + d[attr] + "</span>";
+            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>" + attr_str + ": </strong><span class='details'>" + displayFloat(d[attr]) + "</span>";
         })
 
     tip.direction(function(d) {

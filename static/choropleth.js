@@ -11,10 +11,18 @@ function createChoropleth(data, attr, countries) {
     var height = 525;
 
     // var lowColor = 'rgb(250, 197, 173)'
-    var lowColor = 'rgb(222, 235, 247)'
+    // var lowColor = 'rgb(222, 235, 247)'
+    var lowColor = 'rgb(163, 219, 184)'
+
+
     // var highColor = 'rgb(85, 28, 1)'
-    var highColor = 'rgb(8, 48, 107)'
+    // var highColor = 'rgb(8, 48, 107)'
+    var highColor = 'rgb(38, 66, 195)'
     // var highColor = 'rgb(15, 38, 60)'
+
+
+    // our new lowColor val: 'rgb(160, 183, 176)'
+    // our new highColor val: 'rgb(0, 196, 134)'
 
     // var lowColor = 'rgb(250, 197, 173)'
     // var highColor = '#ff8c00'
@@ -44,7 +52,7 @@ function createChoropleth(data, attr, countries) {
                 // Crop production index \(2004-2006 = 100\)
                 attr_str = "Crop Production Index"
             }
-            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>" + attr_str + ": </strong><span class='details'>" + d[attr] + "</span>";
+            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>" + attr_str + ": </strong><span class='details'>" + displayFloat(d[attr]) + "</span>";
         })
 
     tip.direction(function(d) {

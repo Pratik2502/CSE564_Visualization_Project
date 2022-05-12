@@ -68,7 +68,7 @@ var worldMapTrigger3 = {
 }
 
 function displayFloat(num) {
-    return (Math.round(num * 100) / 100).toFixed(2);
+    return (Math.round(num * 1000) / 1000).toFixed(2);
 }
 
 $.ajax({
