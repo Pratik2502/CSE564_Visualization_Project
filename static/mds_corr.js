@@ -73,7 +73,7 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
         .offset([-10, 0])
         .html(function(d) {
             // console.log(d);
-            return "<strong>Attribute1: </strong><span class='details'>" + d["field1"] + "<br></span>" + "<strong>Attribute2: </strong><span class='details'>" + d["field2"] + "<br></span>" + "<strong>Correlation: </strong><span class='details'>" + displayFloat(d["value"]) + "</span>";
+            return "<strong style=\"font-size: 20px\">Attribute1: </strong><span class='details' style=\"font-size: 20px\">" + d["field1"] + "<br></span>" + "<strong style=\"font-size: 20px\">Attribute2: </strong><span class='details' style=\"font-size: 20px\">" + d["field2"] + "<br></span>" + "<strong style=\"font-size: 20px\">Correlation: </strong><span class='details' style=\"font-size: 20px\">" + displayFloat(d["value"]) + "</span>";
         });
     plotOutercorr.call(tip);
 
@@ -83,7 +83,7 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
         .offset([-10, 0])
         .html(function(d) {
             // console.log(d);
-            return "<strong>Attribute: </strong><span class='details'>" + d["fields"] + "<br></span>";
+            return "<strong style=\"font-size: 20px\">Attribute: </strong><span class='details' style=\"font-size: 20px\">" + d["fields"] + "<br></span>";
         });
     plotOutercorr.call(circleTip);
 

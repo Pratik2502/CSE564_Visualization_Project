@@ -241,7 +241,7 @@ function createLineChart(lineChartData, selectedAttr) {
             // console.log(d);
             const currattr = d["Attribute"]
             const origAttr = currattr.replace("normalised_","");
-            return "<strong>" + origAttr + " : </strong><span class='details'>" + displayFloat(d["dataObj"][origAttr]) + "<br></span>";
+            return "<strong style=\"font-size: 20px\">" + origAttr + " : </strong><span class='details' style=\"font-size: 20px\">" + displayFloat(d["dataObj"][origAttr]) + "<br></span>";
         });
     plotInner.call(circleTipLineChart);
 

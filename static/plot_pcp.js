@@ -37,7 +37,7 @@ function plot_pcp(pcp_data, order){
             const country = d["Country_Name"]
             // const origAttr = currattr.replace("normalised_","");
             // return "<strong>" + origAttr + " : </strong><span class='details'>" + displayFloat(d["dataObj"][origAttr]) + "<br></span>";
-            return "<strong>Country : </strong><span class='details'>"+country+"<br></span>"
+            return "<strong style=\"font-size: 20px\">Country : </strong><span class='details' style=\"font-size: 20px\">"+country+"<br></span>"
         });
     plotInner.call(pcpToolTip);
     
