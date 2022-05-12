@@ -52,7 +52,7 @@ function createChoropleth(data, attr, countries) {
                 // Crop production index \(2004-2006 = 100\)
                 attr_str = "Crop Production Index"
             }
-            return "<strong>Country: </strong><span class='details'>" + d.properties.name + "<br></span>" + "<strong>" + attr_str + ": </strong><span class='details'>" + displayFloat(d[attr]) + "</span>";
+            return "<strong style=\"font-size: 20px\">Country: </strong><span class='details' style=\"font-size: 20px\">" + d.properties.name + "<br></span>" + "<strong style=\"font-size: 20px\">" + attr_str + ": </strong><span class='details' style=\"font-size: 20px\">" + displayFloat(d[attr]) + "</span>";
         })
 
     tip.direction(function(d) {

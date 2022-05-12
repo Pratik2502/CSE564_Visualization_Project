@@ -64,7 +64,7 @@ body {
     margin-top: 3px;
 }
 
-.button {
+/* .button {
     background-color: #d63939;
     border: none;
     color: white;
@@ -75,8 +75,16 @@ body {
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-}
+} */
 
+#resetAll {
+    background-color: rgb(163, 219, 184);
+    color: blue;
+    font-size: 24px;
+    margin-left: 30px;
+    padding: 5px;
+    width: 200px;
+}
 
 .x.axis {
     font-size: 18px;

@@ -17,12 +17,36 @@ function clickedLabel(event) {
     }
 }
 
+function blankLineChart() {
+    document.getElementById("cropProdIdx").checked = true
+    document.getElementById("foodProdIdx").checked = false
+    document.getElementById("arableLand").checked = false
+    document.getElementById("agriculturalLand").checked = false
+    document.getElementById("accessToElectricity").checked = false
+    document.getElementById("agriMachinery").checked = false
+    document.getElementById("gdp").checked = false
+    document.getElementById("agriImports").checked = false
+    document.getElementById("agriExports").checked = false
+}
+
 function createLineChart(lineChartData, selectedAttr) {
     // console.log("==============================");
     // console.log("entered line chart method");
     // console.log(lineChartData);
     // console.log("===============");
     // console.log(selectedAttr);
+
+    // REFRESHING CHECKBOXES HERE
+    
+
+    if(locationIDMap[worldmap_country] == "world") {
+        document.getElementById("selectedCountryName").innerHTML = locationIDMap["USA"];
+    }
+    else {
+        document.getElementById("selectedCountryName").innerHTML = locationIDMap[worldmap_country];
+    }
+    
+    // document.getElementById("selectedCountryName").innerHTML = "UNITED STATES OF";
 
     data = lineChartData
     
@@ -108,22 +132,30 @@ function createLineChart(lineChartData, selectedAttr) {
     var yScale = d3.scaleLinear().range([innerHeightLine, 0]).domain([linedata_min-0.01*linedata_min, linedata_max+0.01*linedata_min])
 
     plotInner.append("g")
+        .style("font-size", "18px")
+        // .style("transform","rotate(-40)")
         .attr("transform", "translate(0," + innerHeightLine + ")")
+        .attr("stroke", "white")
         .call(d3.axisBottom(xScale))
+        // .selectAll("text")
+        // .attr("transform","rotate(-40)")
+
         .append("text")
         // .attr("y", margins.bottom / 2)
         // .attr("y", marginBottomLineChart.bottom)
-        .attr("y", 40)
+        .attr("y", 50)
         // .attr("x", innerWidth / 2)
         // .attr("x", innerWidthLine/2)
         .attr("x", 400)
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "18px")
+        .attr("font-size", "22px")
         .text("Year");
 
     plotInner.append("g")
+        .style("font-size", "18px")
+        .attr("stroke", "white")
         .call(d3.axisLeft(yScale)
         .tickFormat(function(d) {
             // return d*100 + '%';
@@ -141,7 +173,7 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "18px")
+        .attr("font-size", "22px")
         // .text(selectedAttr);
         .text("Selected Attributes in %");
 
@@ -240,7 +272,8 @@ function createLineChart(lineChartData, selectedAttr) {
         .html(function(d) {
             // console.log(d);
             const currattr = d["Attribute"]
-            return "<strong>" + currattr + " : </strong><span class='details'>" + d["dataObj"][currattr] + "<br></span>";
+            const origAttr = currattr.replace("normalised_","");
+            return "<strong style=\"font-size: 20px\">" + origAttr + " : </strong><span class='details' style=\"font-size: 20px\">" + displayFloat(d["dataObj"][origAttr]) + "<br></span>";
         });
     plotInner.call(circleTipLineChart);
 
@@ -275,6 +308,11 @@ function createLineChart(lineChartData, selectedAttr) {
     processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_imports_percent", 7, circleData, color);
     processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_exports_percent", 8, circleData, color);
 
+    function onClickInteraction(d) {
+        const normalAttr = d["Attribute"]
+        barChartAttr = normalAttr.replace("normalised_", "");
+        resetBarChart();
+    }
 
     function handleMouseOverCircle(d) {
         circleTipLineChart.show(d);
@@ -298,6 +336,7 @@ function createLineChart(lineChartData, selectedAttr) {
             .style('cursor', 'pointer')
             .on("mouseover", handleMouseOverCircle)
             .on("mouseout", handleMouseOutCircle)
+            .on("click", onClickInteraction)
 
 
 
