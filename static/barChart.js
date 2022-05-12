@@ -1,6 +1,6 @@
-var outerWidthBarChart = 500, outerHeightBarChart = 5/6 * outerWidthBarChart
+var outerWidthBarChart = 715, outerHeightBarChart = 5/6 * outerWidthBarChart
 
-var marginsBar = {top: 50, right: 50, bottom: 5, left: 50};
+var marginsBar = {top: 50, right: 50, bottom: 70, left: 90};
 
 var innerWidthBarChart = outerWidthBarChart - marginsBar.left - marginsBar.right - 20
 var innerHeightBarChart = outerHeightBarChart - marginsBar.top - marginsBar.bottom - 20
@@ -86,22 +86,23 @@ function setupBar(barChartData, selectedColumn) {
     .attr('text-anchor', 'middle')
     // .text(longVars[xvar])
     .attr("fill", "white")
-    .attr("font-size", "15")
-    .text(selectedColumn)
+    .attr("font-size", "18")
+    .text("Top 10 Countries")
 
     plotOuterBar
     .append('text')
     .attr('class', 'y axis')
-    .attr('x', marginsBar.left / 2)
-    .attr('y', marginsBar.bottom + innerHeightBarChart / 2)
+    // .attr('x', marginsBar.left / 2 - 70)
+    .attr('x', -20)
+    .attr('y', marginsBar.bottom + innerHeightBarChart / 2 - 20)
     .attr('text-anchor', 'middle')
     .attr(
       'transform',
       `rotate(-90 ${marginsBar.left / 2} ${marginsBar.bottom + innerHeightBarChart / 2})`
     )
     .attr("fill", "white")
-    .attr("font-size", "15")
-    .text("Frequency")
+    .attr("font-size", "18")
+    .text(selectedColumn)
 
   }
 
@@ -167,7 +168,8 @@ function updateBar(barChartData, selectedColumn) {
         .transition()
         .duration(transitionTime)
         // .text(longVars[xvar])
-        .text(selectedColumn)
+        // .text(selectedColumn)
+        .text("Top 10 Countries")
 
     // var my_group = plotInnerBar.selectAll(".chart_group")
     //                 .data(barData)
