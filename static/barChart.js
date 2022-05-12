@@ -76,6 +76,7 @@ function setupBar(barChartData, selectedColumn) {
     .attr("stroke", "white")
     .attr('class', 'x axis') // note: two classes; handy!
     .call(xCatAxis)
+    .selectAll("text").attr("transform","translate(0,30)rotate(-20)")
 
     plotInnerBar
     .append('g')
