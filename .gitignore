@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+reduced_data_new.xlsx
+reduced_data_asdasd.xlsx
