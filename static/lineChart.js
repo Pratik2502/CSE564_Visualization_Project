@@ -276,6 +276,11 @@ function createLineChart(lineChartData, selectedAttr) {
     processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_imports_percent", 7, circleData, color);
     processObjCircleData(lineChartData, "normalised_Agricultural_raw_materials_exports_percent", 8, circleData, color);
 
+    function onClickInteraction(d) {
+        const normalAttr = d["Attribute"]
+        barChartAttr = normalAttr.replace("normalised_", "");
+        resetBarChart();
+    }
 
     function handleMouseOverCircle(d) {
         circleTipLineChart.show(d);
@@ -299,6 +304,7 @@ function createLineChart(lineChartData, selectedAttr) {
             .style('cursor', 'pointer')
             .on("mouseover", handleMouseOverCircle)
             .on("mouseout", handleMouseOutCircle)
+            .on("click", onClickInteraction)
 
 
 
