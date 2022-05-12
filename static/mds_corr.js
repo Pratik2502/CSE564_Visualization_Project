@@ -71,16 +71,21 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
     var tip = d3.tip()
         .attr('class', 'd3-tip')
         .offset([-10, 0])
-        // .transition()
-        // .duration(transitionTime)
         .html(function(d) {
             // console.log(d);
             return "<strong>Attribute1: </strong><span class='details'>" + d["field1"] + "<br></span>" + "<strong>Attribute2: </strong><span class='details'>" + d["field2"] + "<br></span>" + "<strong>Correlation: </strong><span class='details'>" + displayFloat(d["value"]) + "</span>";
-            // return "<strong>This is some tooltip</strong>"
         });
-
     plotOutercorr.call(tip);
 
+
+    var circleTip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            // console.log(d);
+            return "<strong>Attribute: </strong><span class='details'>" + d["fields"] + "<br></span>";
+        });
+    plotOutercorr.call(circleTip);
 
     mds_corr_values.forEach(function(obj) {
         
@@ -126,100 +131,17 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
 
     function handleClick(d, i){
         console.log("++++++++ handling click ++++++++");
-        // console.log(d);
-        // console.log(i);
         barChartAttr = d.fields;
         resetBarChart();
-        // var curr = d3.select(this)
-        // curr.style("fill", "red")
-        //     .attr('r', 8)
-
-        // var check = 0;
-        // for(i=0; i<pcp_axis_order.length - 1; i++){
-        //     if(pcp_axis_order[i] === d.fields){
-        //         check = 1;
-        //     }
-        // }
-        // if(top != -1 && !check){
-        //     d3.selectAll("." + pcp_axis_order[top] + '-' + d.fields).style("stroke", "blue").style("visibility", "visible")
-        //     d3.selectAll("." + d.fields + '-' + pcp_axis_order[top]).style("stroke", "blue").style("visibility", "visible")
-        // }
-
-        // var circle = plotInnercorr.selectAll(".point")
-        // var flag =0;
-        // var index = -1;
-        // for(i=0; i<pcp_axis_order.length; i++){
-        //     if(pcp_axis_order[i] === d.fields){
-        //         flag=1;
-        //         index = i;
-        //         if(i === top){
-        //             pcp_axis_order.pop()
-        //             top--;
-        //             curr.style("fill", function(d) { return color(d.x); })
-        //             if(top != -1){
-        //                 d3.selectAll("." + pcp_axis_order[top] + '-' + d.fields).style("stroke", "blue").style("visibility", "hidden")
-        //                 d3.selectAll("." + d.fields + '-' + pcp_axis_order[top]).style("stroke", "blue").style("visibility", "hidden")
-        //             }
-        //         }
-        //     }
-        // }
-        // if(!flag){
-        //     pcp_axis_order.push(d.fields)
-        //     top++;
-        // }
-        // if(pcp_axis_order.length == 10){
-        //     $.ajax({
-        //         type: "GET",
-        //         url: "/pcp",
-        //         success: function(response) {
-        //             pcp_data = JSON.parse(response);
-        //             plot_pcp(pcp_data, pcp_axis_order)
-        //             pcp_axis_order = []
-        //             circle.style("fill", function(d) { return color(d.x); })
-        //                  .attr("r", 8)
-        //             mds_corr_data.forEach(function(p1, i1) {
-        //                 mds_corr_data.forEach(function(p2, i2) {
-        //                     if (i1 !== i2) {
-        //                         d3.selectAll("." + p1.fields + "-" + p2.fields)
-        //                             .style("stroke", "lightgrey")
-        //                             .style("visibility", "hidden")
-        //                     }
-        //                 });
-        //             });
-        //             top=-1;
-        //         },
-        //         error: function(err) {
-        //             console.log(err);
-        //         }
-        //     });
-        // }
     }
 
-    // function checkVisited(label){
-    //     for(i=0; i<pcp_axis_order.length; i++){
-    //         if(label === pcp_axis_order[i]){
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     function handleMouseOver(d, i){
-        // mds_corr_data.forEach(function(p, j) {
-        //     if (i !== j && !checkVisited(p.fields)) {
-        //         d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "visible")
-        //         d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "visible")
-        //     }
-        // });
+        circleTip.show(d);
     }
 
     function handleMouseOut(d, i){
-        // mds_corr_data.forEach(function(p, j) {
-        //     if (i !== j && !checkVisited(p.fields) ) {
-        //         d3.selectAll("." + p.fields + '-' + d.fields).style("visibility", "hidden")
-        //         d3.selectAll("." + d.fields + '-' + p.fields).style("visibility", "hidden")
-        //     }
-        // });
+        circleTip.hide(d);
     }
 
     var points = plotInnercorr.selectAll("circles")
@@ -232,6 +154,7 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
             .attr("r", 8)
             .attr("fill", "blue")
             .style("fill", function(d) { return color(d.x); })
+            .style('cursor', 'pointer')
             .on("mouseover", handleMouseOver)
             .on("mouseout", handleMouseOut)
             .on("click", handleClick)
