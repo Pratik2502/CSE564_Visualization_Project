@@ -51,17 +51,38 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
     //     });
     // });
 
+
+
     function getCoordinatesForAttr(attrName, mds_corr_data) {
         coords = {}
         coordObj = mds_corr_data.filter(objs => objs["fields"] == attrName);
-        console.log("          !!!!!!!!!!!   p1   !!!!!!!!!!             ");
-        console.log(coordObj);
+        // console.log("          !!!!!!!!!!!   p1   !!!!!!!!!!             ");
+        // console.log(coordObj);
         if(coordObj == undefined || coordObj == null)
             return null;
         coords["x"] = coordObj[0]["x"];
         coords["y"] = coordObj[0]["y"];
         return coords
     }
+
+
+
+
+    const lowColorPos = 'rgb(222, 235, 247)'
+    const highColorPos = 'rgb(8, 48, 107)'
+
+    let minValPosCorr = d3.min(mds_corr_values.filter(d => d["value"] >= 0), function(d) { return d["value"] });
+    let maxValPosCorr = d3.max(mds_corr_values.filter(d => d["value"] >= 0), function(d) { return d["value"] });
+    
+    var rampPos = d3.scaleSqrt().domain([minValPosCorr, maxValPosCorr]).range([lowColorPos, highColorPos])
+
+    const highColorNeg = 'rgb(249 33 69)'
+    const lowColorNeg = 'rgb(253 188 199)'
+    
+    let minValNegCorr = d3.min(mds_corr_values.filter(d => d["value"] < 0), function(d) { return d["value"] });
+    let maxValNegCorr = d3.max(mds_corr_values.filter(d => d["value"] < 0), function(d) { return d["value"] });
+    
+    var rampNeg = d3.scaleSqrt().domain([minValNegCorr, maxValNegCorr]).range([lowColorNeg, highColorNeg])
 
 
     mds_corr_values.forEach(function(obj) {
@@ -81,7 +102,15 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
                     .attr('y1', yScale(p1.y))
                     .attr('x2', xScale(p2.x))
                     .attr('y2', yScale(p2.y))
-                    .style('stroke', 'lightgrey')
+                    .style('stroke-width', 1.5)
+                    // .style('stroke', 'lightgrey')
+                    .style('stroke', function(d) {
+                        if(obj["value"] >= 0) {
+                            return rampPos(obj["value"]);
+                        }
+                        return rampNeg(obj["value"]);
+                    })
+                    // .style('fill', 'red')
                     .style("visibility", "visible")
             }
         }
