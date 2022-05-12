@@ -244,7 +244,7 @@ function updateBar(barChartData, selectedColumn) {
         })
         .style("visibility", "hidden")
         .attr("text-anchor","middle")
-        .text(function(d) { return d.value; });
+        .text(function(d) { return displayFloat(d.value); });
                         
     function handleMouseOver() {
         var txt = d3.select(this.nextSibling)
