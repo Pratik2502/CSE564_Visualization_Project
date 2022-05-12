@@ -76,3 +76,12 @@ body {
     margin: 4px 2px;
     cursor: pointer;
 }
+
+
+.x.axis {
+    font-size: 18px;
+}
+
+.y.axis {
+    font-size: 18px;
+}

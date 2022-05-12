@@ -70,6 +70,7 @@ function setupBar(barChartData, selectedColumn) {
 
     plotInnerBar
     .append('g')
+    // .attr('font-size', '18px')
     .attr('transform', 'translate(' + 0 + ', ' + innerHeightBarChart + ')')
     .attr('class', 'x axis') // note: two classes; handy!
     .call(xCatAxis)
@@ -150,11 +151,14 @@ function updateBar(barChartData, selectedColumn) {
     plotInnerBar
         .select('.x.axis')
         .transition()
+        // .attr('stroke', 'white')
+        .attr('font-size', '18px')
         .duration(transitionTime)
         .call(xCatAxis)
     plotInnerBar
         .select('.y.axis')
         .transition()
+        // .attr('stroke', 'white')
         .duration(transitionTime)
         .call(yCatAxis)
 
@@ -224,8 +228,9 @@ function updateBar(barChartData, selectedColumn) {
             // return innerHeight - yCatScale(d.count);
             return innerHeightBarChart - yCatScale(d.value);
         })
-        .style('fill', 'blue')
-        .style('opacity', 0.6)
+        // .style('fill', 'blue')
+        .style('fill', 'rgb(163, 219, 184)')
+        .style('opacity', 0.9)
         
     //then position text
     my_group.select(".group_text")
@@ -243,16 +248,20 @@ function updateBar(barChartData, selectedColumn) {
                         
     function handleMouseOver() {
         var txt = d3.select(this.nextSibling)
-        txt.style('visibility','visible').style('fill', 'red')
-        d3.select(this).style('fill', 'red')
-        .style('opacity', 0.6)
+        txt.style('visibility','visible')
+        .style('fill', 'rgb(252, 141, 98)')
+        d3.select(this)
+        .style('fill', 'rgb(38, 66, 195)')
+        .style('opacity', 1)
     }
 
     function handleMouseOut() {
         var txt = d3.select(this.nextSibling)
         txt.style('visibility','hidden')
-        d3.select(this).style('fill', 'blue')
-        .style('opacity', 0.6)
+        d3.select(this)
+        // .style('fill', 'blue')
+        .style('fill', 'rgb(163, 219, 184)')
+        .style('opacity', 0.9)
     }
     
 }
