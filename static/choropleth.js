@@ -211,6 +211,7 @@ function createChoropleth(data, attr, countries) {
         .call(yAxis)
 
     d3.selectAll(".y-axis text")
+        .attr('font-size', '18px')
         .style("fill", "rgb(155, 155, 155)");
 
     function updateChoropleth(data, attr, countries) {
