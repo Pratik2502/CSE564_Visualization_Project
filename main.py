@@ -174,9 +174,15 @@ def get_agri_mds():
     # df_country = pd.read_csv("/content/drive/MyDrive/CSE564 VIS/Cleaned_data.csv")
     global agri_df
     global df_mds_corr
+    global country_avg_df
     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
     df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
-    mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    # mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
+    corr_mat = 1 - np.abs(df_kept.corr())
+    mds_fitted_pc = mds_pc.fit(corr_mat)
+
+    print('----------------- Correlation Matrix ----------------: ', corr_mat)
+
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
     res_corr_values = get_corr_values()
@@ -188,24 +194,44 @@ def get_agri_mds():
 
 
 def get_corr_values():
-    global df_mds_corr
+    global agri_df
     # mds_pc = MDS(n_components=2, dissimilarity='precomputed')
     # df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
     # mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     # df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     # df_mds_corr['fields'] = df_kept.columns
 
-    temp_df = df_mds_corr.loc[df_mds_corr['fields'].isin(selected_attributes)]
-    temp2_df = temp_df.drop(columns = 'fields')
+    temp_df = country_avg_df.filter(items = selected_attributes)
+    # print('temp_df: ', temp_df)
+    # temp2_df = temp_df.drop(columns = 'fields')
     # print(temp_df)
 
-    corr_matrix = squareform(pdist(temp2_df))
+    corr_matrix = temp_df.corr()
+
+    corr_mat = corr_matrix.to_numpy()
+
+    # print('--------------- corrMatrix ------------------:', corr_mat)
+
+    # distance = pdist(temp2_df, 'cosine')
+    # print('distance: ', distance)
+
+    # # for i in range(len(distance)):
+    # #     distance[i] = 1.0 - distance[i]
+
+    # print('new distance: ', distance)
+    # corr_matrix = 1 - squareform(distance)
+    # print('corr_matrix: ', corr_matrix)
 
     res = []
-    for i, field in enumerate(temp_df['fields']):
-        for j, field2 in enumerate(temp_df['fields']):
+    i, j = 0, 0
+    for field in temp_df:
+        for field2 in temp_df:
             if i > j:
-                res.append({'field1': field, 'field2': field2, 'value': corr_matrix[i][j]})
+                res.append({'field1': field, 'field2': field2, 'value': corr_mat[i][j]})
+            j += 1
+        i += 1
+        j = 0
+            
 
     # print(res)
     #pairwise = pd.Dataframe(corr_matrix, columns = df_mds_corr['fields'], index = df_mds_corr['fields'])
