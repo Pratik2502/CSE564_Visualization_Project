@@ -65,7 +65,26 @@ bottom_10 = dict()
 country_avg_df = None
 df_mds_corr = None
 
-selected_attributes = ['crop_production_index', 'food_production_index', 'GDP per capita (current US$)', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural population (% of total population)', 'Agricultural raw materials imports (% of merchandise imports)', 'Agricultural raw materials exports (% of merchandise exports)']
+selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials exports_percent']
+
+def normalise():
+    global agri_df
+    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    normalised_df = (df_kept - df_kept.min()) / (df_kept.max() - df_kept.min()) * 100
+    print('Normalised df: ', normalised_df)
+    # agri_df.merge(normalised_df.rename(columns=lambda x: {x: 'normalised ' + x}), left_index=True, right_index=True )
+    # df.toDF(*newColumns)
+    columns = normalised_df.columns
+    new_columns = ['normalised ' + column for column in columns]
+    print('columns: ', columns)
+    print('new_columns: ', new_columns)
+    normalised_df.columns = new_columns
+    print('normalised_df: ', normalised_df)
+
+    
+
+
+
 
 def compute_average():
     global agri_df
@@ -181,7 +200,7 @@ def get_agri_mds():
     corr_mat = 1 - np.abs(df_kept.corr())
     mds_fitted_pc = mds_pc.fit(corr_mat)
 
-    print('----------------- Correlation Matrix ----------------: ', corr_mat)
+    # print('----------------- Correlation Matrix ----------------: ', corr_mat)
 
     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     df_mds_corr['fields'] = df_kept.columns
@@ -254,43 +273,43 @@ def get_agri_pcp_data():
     #    'index', 'Country_Name', 'Country_Code', 'year',
     #    'Access_to_electricity_percent',
        
-        'GDP per capita (current US$)',
+        'GDP_per_capita',
        'agricultural_land_percent',
     #    'agricultural_land_sq_km',
     #    'agricultural_machinery_tractors',
     #    'agricultural_machinery_tractors_100_sqkm',
     #    'agricultural_methane_emissions_percent',
-    #    'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
-    #    'Agricultural nitrous oxide emissions (% of total)',
-    #    'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
-       'Agricultural raw materials exports (% of merchandise exports)',
-       'Agricultural raw materials imports (% of merchandise imports)',
-    #    'Agriculture, forestry, and fishing, value added (% of GDP)',
-    #    'Agriculture, forestry, and fishing, value added (current US$)',
-       'Arable land (% of land area)',
-    #    'Arable land (hectares per person)',
-    #    'Arable land (hectares)',
-    #    'Birth rate, crude (per 1,000 people)',
-    #    'Cereal production (metric tons)',
-    #    'Cereal yield (kg per hectare)',
+    #    '',
+    #    'Agricultural_nitrous_oxide_emissions_percent',
+    #    'Agricultural_nitrous_oxide_emissions',
+       'Agricultural_raw_materials exports_percent',
+       'Agricultural_raw_materials_imports_percent',
+    #    'Agriculture_forestry_fishing_value_in_gdp',
+    #    'Agriculture_forestry_fishing_value_added_in_USD',
+       'Arable_land_percent',
+    #    'Arable_land',
+    #    'Arable_land_hectares',
+    #    'Birth_rate',
+    #    'Cereal_production',
+    #    'Cereal_yield',
        'crop_production_index',
-    #    'Death rate, crude (per 1,000 people)',
-    #    'Employment in agriculture (% of total employment) (modeled ILO estimate)',
-    #    'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
-    #    'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
+    #    'Death_rate',
+    #    'Employment_in_agriculture_percent',
+    #    'Employment_in_agriculture_female',
+    #    'Employment_in_agriculture_male',
        'food_production_index',
-    #    'Forest area (% of land area)', 'Forest area (sq. km)',
+    #    'Forest_area_percent', 'Forest_area',
     'Access_to_electricity_rural_percent',
-    #    'Land area (sq. km)',
-    #    'Land under cereal production (hectares)',
-       'Livestock production index (2004-2006 = 100)',
-    #    'Mineral rents (% of GDP)',
-    #    'Mortality rate, infant (per 1,000 live births)',
-       'Permanent cropland (% of land area)',
-    #    'Population, total',
-    #    'Rural population', 'Rural population (% of total population)',
-       'Rural population growth (annual %)',
-    #    'Surface area (sq. km)'
+    #    'Land_area',
+    #    'Land_under_cereal_production ',
+       'Livestock_production_index',
+    #    'Mineral_rents_percent',
+    #    'Mortality_rate',
+       'Permanent_cropland_percent',
+    #    'Population_total',
+    #    'Rural_population', 'Rural_population_percent',
+       'Rural_population_growth_percent',
+    #    'Surface_area'
     ]
 
     # pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
@@ -303,7 +322,7 @@ def get_agri_pcp_data():
     # temp_df = country_avg_df.filter(items = selected_attributes)
     # temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
 
-    # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP per capita (current US$)']]).labels_
+    # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
     country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['crop_production_index']]).labels_
     dataToReturn["pcpData"] = country_avg_df.to_dict(orient="records")
 
@@ -392,6 +411,7 @@ def home():
 
 
 if(__name__ == "__main__"):
+    normalise()
     compute_average()
     preprocess()
     preprocess_pcp_data()
@@ -432,31 +452,31 @@ def get_pcp_data():
        'agricultural_machinery_tractors',
        'agricultural_machinery_tractors_100_sqkm',
        'agricultural_methane_emissions_percent',
-       'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
-       'Agricultural nitrous oxide emissions (% of total)',
-       'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
-       'Agricultural raw materials exports (% of merchandise exports)',
-       'Agricultural raw materials imports (% of merchandise imports)',
-       'Agriculture, forestry, and fishing, value added (% of GDP)',
-       'Agriculture, forestry, and fishing, value added (current US$)',
-       'Arable land (% of land area)', 'Arable land (hectares per person)',
-       'Arable land (hectares)', 'Birth rate, crude (per 1,000 people)',
-       'Cereal production (metric tons)', 'Cereal yield (kg per hectare)',
+       'Agricultural_methane_emissions',
+       'Agricultural_nitrous_oxide_emissions_percent',
+       'Agricultural_nitrous_oxide_emissions',
+       'Agricultural_raw_materials exports_percent',
+       'Agricultural_raw_materials_imports_percent',
+       'Agriculture_forestry_fishing_value_in_gdp',
+       'Agriculture_forestry_fishing_value_added_in_USD',
+       'Arable_land_percent', 'Arable_land',
+       'Arable_land_hectares', 'Birth_rate',
+       'Cereal_production', 'Cereal_yield',
        'crop_production_index',
-       'Death rate, crude (per 1,000 people)',
-       'Employment in agriculture (% of total employment) (modeled ILO estimate)',
-       'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
-       'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
+       'Death_rate',
+       'Employment_in_agriculture_percent',
+       'Employment_in_agriculture_female',
+       'Employment_in_agriculture_male',
        'food_production_index',
-       'Forest area (% of land area)', 'Forest area (sq. km)',
-       'GDP per capita (current US$)', 'Land area (sq. km)',
-       'Land under cereal production (hectares)',
-       'Livestock production index (2004-2006 = 100)',
-       'Mineral rents (% of GDP)',
-       'Mortality rate, infant (per 1,000 live births)',
-       'Permanent cropland (% of land area)', 'Population, total',
-       'Rural population', 'Rural population (% of total population)',
-       'Rural population growth (annual %)', 'Surface area (sq. km)'
+       'Forest_area_percent', 'Forest_area',
+       'GDP_per_capita', 'Land_area',
+       'Land_under_cereal_production ',
+       'Livestock_production_index',
+       'Mineral_rents_percent',
+       'Mortality_rate',
+       'Permanent_cropland_percent', 'Population_total',
+       'Rural_population', 'Rural_population_percent',
+       'Rural_population_growth_percent', 'Surface_area'
     ]
 
     pcp_data_temp = pcp_data_send[pcp_axis].groupby("location")[pcp_axis[2:]].mean().reset_index()
