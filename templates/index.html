@@ -79,83 +79,96 @@
 
                         <hr>
                         <div class='row'>
-                        <div id="linechart"></div>
+                            <div id="linechart"></div>
 
-                        <div class="panels_column">
+                            <div class="panels_column">
 
-                            <div class="checkbox_panel">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary active" id="cropProdIdxlabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="cropProdIdx" id="cropProdIdx" value="CropProdIdx"
-                                            checked onchange="resetLineChart()">Crop Production Index<br>
-                                    </label>
-                                </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="foodProdIdxLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="foodProdIdx" id="foodProdIdx" value="FoodProdIdx"
-                                            onchange="resetLineChart()">Food production index<br>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="checkbox_panel">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="arableLandLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="arableLand" id="arableLand" value="arableLand"
-                                            onchange="resetLineChart()">Arable Land (%)<br>
-                                    </label>
-                                </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="agriculturalLandLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="agriculturalLand" id="agriculturalLand"
-                                            value="AgriculturalLand" onchange="resetLineChart()">Agricultural Land
-                                        (%)<br>
-                                    </label>
-                                </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="accessToElectricityLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="accessToElectricity" id="accessToElectricity"
-                                            value="AccessToElectricity" onchange="resetLineChart()">Access to
-                                        Electricity (% rural areas)<br>
-                                    </label>
-                                </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="agriMachineryLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="agriMachinery" id="agriMachinery"
-                                            value="AgriMachinery" onchange="resetLineChart()">Agricultural Machinery<br>
-                                    </label>
+                                <div class="checkbox_panel">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active" id="cropProdIdxlabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="cropProdIdx" id="cropProdIdx"
+                                                value="CropProdIdx" checked onchange="resetLineChart()">Crop Production
+                                            Index<br>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="foodProdIdxLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="foodProdIdx" id="foodProdIdx"
+                                                value="FoodProdIdx" onchange="resetLineChart()">Food production
+                                            index<br>
+                                        </label>
+                                    </div>
                                 </div>
 
-                            </div>
+                                <div class="checkbox_panel">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="arableLandLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="arableLand" id="arableLand" value="arableLand"
+                                                onchange="resetLineChart()">Arable Land (%)<br>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="agriculturalLandLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="agriculturalLand" id="agriculturalLand"
+                                                value="AgriculturalLand" onchange="resetLineChart()">Agricultural Land
+                                            (%)<br>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="accessToElectricityLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="accessToElectricity" id="accessToElectricity"
+                                                value="AccessToElectricity" onchange="resetLineChart()">Access to
+                                            Electricity (% rural areas)<br>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="agriMachineryLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="agriMachinery" id="agriMachinery"
+                                                value="AgriMachinery" onchange="resetLineChart()">Agricultural
+                                            Machinery<br>
+                                        </label>
+                                    </div>
 
-
-                            <div class="checkbox_panel">
-
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="gdpLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="gdp" id="gdp" value="Gdp"
-                                            onchange="resetLineChart()">GDP per capita (current US$)<br>
-                                    </label>
                                 </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="agriImportsLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="agriImports" id="agriImports"
-                                            value="AgriImports" onchange="resetLineChart()">Agricultural Raw Material
+
+
+                                <div class="checkbox_panel">
+
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="gdpLabel" onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="gdp" id="gdp" value="Gdp"
+                                                onchange="resetLineChart()">GDP per capita (current US$)<br>
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="agriImportsLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="agriImports" id="agriImports"
+                                                value="AgriImports" onchange="resetLineChart()">Agricultural Raw
+                                            Material
                                             Imports<br>
-                                    </label>
-                                </div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary" id="agriExportsLabel" onclick="clickedLabel(this);">
-                                        <input type="checkbox" name="agriExports" id="agriExports"
-                                            value="AgriExports" onchange="resetLineChart()">Agricultural Raw Material
+                                        </label>
+                                    </div>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary" id="agriExportsLabel"
+                                            onclick="clickedLabel(this);">
+                                            <input type="checkbox" name="agriExports" id="agriExports"
+                                                value="AgriExports" onchange="resetLineChart()">Agricultural Raw
+                                            Material
                                             Exports<br>
-                                    </label>
+                                        </label>
+                                    </div>
+
                                 </div>
 
                             </div>
-
                         </div>
-                    </div>
 
 
                     </div>

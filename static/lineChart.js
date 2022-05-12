@@ -1,6 +1,6 @@
-var outerWidthLine = 880,
+var outerWidthLine = 980,
     outerHeightLine = 420
-var marginUpperLineChart = { top: 70, right: 90, bottom: 10, left: 80 }
+var marginUpperLineChart = { top: 90, right: 90, bottom: 10, left: 170 }
 var marginBottomLineChart = { top: 255, right: 300, bottom: 50, left: 40 }
 var innerWidthLine = outerWidthLine - marginUpperLineChart.left - marginUpperLineChart.right
 var innerHeightLine = outerHeightLine - marginUpperLineChart.top - marginUpperLineChart.bottom - 20

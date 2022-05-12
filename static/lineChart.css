@@ -10,14 +10,9 @@
     pointer-events: all;
 }
 
-.bubbles {
-    stroke-width: 1px;
-    stroke: black;
-    opacity: .8
-}
 
-.bubbles:hover {
-    stroke: black;
+.linechart {
+    padding-left: 10;
 }
 
 .checkbox_panel {
