@@ -38,15 +38,15 @@ function createLineChart(lineChartData, selectedAttr) {
 
     var xScale = d3.scaleLinear().range([0, innerWidthLine]).domain([xdata_min-0.001*xdata_min, xdata_max+0.001*xdata_min])
 
-    selectedAttr = "Agricultural land (% of land area)"
+    selectedAttr = "agricultural_land_percent"
     agri_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
     agri_linedata_min = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    selectedAttr = "Crop production index (2004-2006 = 100)"
+    selectedAttr = "crop_production_index"
     crop_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
     crop_linedata_min = d3.min(lineChartData, function(d) { return +d[selectedAttr]; })
 
-    selectedAttr = "Food production index (2004-2006 = 100)"
+    selectedAttr = "food_production_index"
     food_linedata_max = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
     food_linedata_min = d3.max(lineChartData, function(d) { return +d[selectedAttr]; })
 
@@ -106,40 +106,131 @@ function createLineChart(lineChartData, selectedAttr) {
         .text("Line Chart for attributes")
     
 
-    selectedAttr = "Crop production index (2004-2006 = 100)"
+    selectedAttr = "crop_production_index"
     const line1 = d3.line()
         // .x(d => xScale(d.x)+xScale.bandwidth()/2)
         // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
         // .y(d => yScale(d.y))
-        .y(d => yScale(d["Crop production index (2004-2006 = 100)"]))
+        .y(d => yScale(d["crop_production_index"]))
         // .style({ 'stroke-width': '2px' })
         .curve(d3.curveLinear)
     
     
-    // selectedAttr = "Food production index (2004-2006 = 100)"
-    selectedAttr = "Agricultural land (% of land area)"
+    // selectedAttr = "food_production_index"
+    selectedAttr = "agricultural_land_percent"
     const line2 = d3.line()
         // .x(d => xScale(d.x)+xScale.bandwidth()/2)
         // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
         // .y(d => yScale(d.y))
-        .y(d => yScale(d["Agricultural land (% of land area)"]))
+        .y(d => yScale(d["agricultural_land_percent"]))
         .curve(d3.curveLinear)
 
 
-    // selectedAttr = "Food production index (2004-2006 = 100)"
+    // selectedAttr = "food_production_index"
     const line3 = d3.line()
         // .x(d => xScale(d.x)+xScale.bandwidth()/2)
         // .x(d => xScale(d.x)+3)
         .x(d => xScale(d["year"]) + 3)
         // .y(d => yScale(d.y))
-        .y(d => yScale(d["Food production index (2004-2006 = 100)"]))
+        .y(d => yScale(d["food_production_index"]))
         .curve(d3.curveLinear)
 
     console.log("--------------------------")
     // console.log($('#cropProdIdx').value)
     
+    
+
+
+
+
+
+    // Tooltip for circles
+    var circleTipLineChart = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        .html(function(d) {
+            // console.log(d);
+            const currattr = d["Attribute"]
+            return "<strong>" + currattr + " : </strong><span class='details'>" + d["dataObj"][currattr] + "<br></span>";
+        });
+    plotInner.call(circleTipLineChart);
+
+
+    // Circles in line chart
+
+    var circleData = []
+    lineChartData.forEach(d => {
+        let newObj = {}
+        newObj["cx"] = xScale(d["year"]) + 3
+        newObj["cy"] = yScale(d["crop_production_index"])
+        newObj["fill"] = 'teal'
+        newObj["Attribute"] = "crop_production_index"
+        newObj["dataObj"] = d
+        circleData.push(newObj)
+    });
+
+    lineChartData.forEach(d => {
+        let newObj = {}
+        newObj["cx"] = xScale(d["year"]) + 3
+        newObj["cy"] = yScale(d["food_production_index"])
+        newObj["fill"] = 'yellow'
+        newObj["Attribute"] = "food_production_index"
+        newObj["dataObj"] = d
+        circleData.push(newObj)
+    });
+
+    lineChartData.forEach(d => {
+        let newObj = {}
+        newObj["cx"] = xScale(d["year"]) + 3
+        newObj["cy"] = yScale(d["agricultural_land_percent"])
+        newObj["fill"] = 'orange'
+        newObj["Attribute"] = "agricultural_land_percent"
+        newObj["dataObj"] = d
+        circleData.push(newObj)
+    });
+
+    function handleMouseOverCircle(d) {
+        circleTipLineChart.show(d);
+    }
+
+    function handleMouseOutCircle(d) {
+        circleTipLineChart.hide(d);
+    }
+
+    var points = plotInner.selectAll("circles")
+            .data(circleData)
+            .enter()
+            .append("circle")
+            // .attr("class", function(d) { "point" + d["Attribute"] })
+            .attr("class", function(d) { "point:" + d["Attribute"] })
+            .attr("cx", function(d) { return d["cx"]; })
+            .attr("cy", function(d) { return d["cy"]; })
+            .attr("r", 8)
+            .attr("visibility", "hidden")
+            .style("fill", function(d) { return d["fill"]; })
+            .style('cursor', 'pointer')
+            .on("mouseover", handleMouseOverCircle)
+            .on("mouseout", handleMouseOutCircle)
+            // .on("click", handleClick)
+
+        // plotInner.selectAll("circles")
+        //     .data(mds_corr_data)
+        //     .enter()
+        //     .append("text")
+        //     .text(function(d){ return d.short_names; })
+        //     .attr("x", function(d) { return xScale(d.x); })
+        //     .attr("y", function(d) { return yScale(d.y); })
+        //     .style("font-weight", "bold")
+
+
+
+
+
+
+    
+
     if(document.getElementById("cropProdIdx").checked) {
         plotInner.append('path')
             // .datum(data)
@@ -148,6 +239,10 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('fill', 'none')
             .attr('stroke', 'teal')
             .attr('stroke-width', '2')
+        
+        // plotInner.selectAll('.pointcrop_production_index').style("visibility", "hidden")
+        d3.selectAll(".point:crop_production_index")
+            .attr("visibility", "visible")
     }
     
     if(document.getElementById("foodProdIdx").checked) {
@@ -158,6 +253,9 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('fill', 'none')
             .attr('stroke', 'orange')
             .attr('stroke-width', '2')
+        
+        d3.selectAll(".point:food_production_index")
+            .attr("visibility", "visible")
     }
     
     if(document.getElementById("gdp").checked) {
@@ -168,8 +266,12 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('fill', 'none')
             .attr('stroke', 'yellow')
             .attr('stroke-width', '2')
+        
+        // agricultural_land_percent
+        d3.selectAll(".point:agricultural_land_percent")
+            .attr("visibility", "visible")
     }
-    
+
 
     worldMapTrigger.registerListener(function(val) {
         resetLineChart()

@@ -47,7 +47,7 @@ function resetDashboard(){
     //         // });
     
     //         // createLineChart(lineChartData["agriLineData"], selected_attr)
-    //         createLineChart(lineChartData["agriLineData"], "Crop production index (2004-2006 = 100)")
+    //         createLineChart(lineChartData["agriLineData"], "crop_production_index")
     //     },
     //     error: function(err) {
     //         console.log(err);

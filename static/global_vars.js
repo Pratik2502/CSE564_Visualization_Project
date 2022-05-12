@@ -18,7 +18,7 @@ var transitionTime = 200;
 var currLine = "none"
 
 var maxPCPCountry = 0;
-var barChartAttr = "Food production index (2004-2006 = 100)";
+var barChartAttr = "food_production_index";
 
 var locationIDMap = { "world": "World" }
 
@@ -116,7 +116,7 @@ function resetLineChart() {
             // });
     
             // createLineChart(lineChartData["agriLineData"], selected_attr)
-            createLineChart(lineChartData["agriLineData"], "Crop production index (2004-2006 = 100)")
+            createLineChart(lineChartData["agriLineData"], "crop_production_index")
         },
         error: function(err) {
             console.log(err);

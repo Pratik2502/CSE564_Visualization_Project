@@ -65,12 +65,12 @@ bottom_10 = dict()
 country_avg_df = None
 df_mds_corr = None
 
-selected_attributes = ['Crop production index (2004-2006 = 100)', 'Food production index (2004-2006 = 100)', 'GDP per capita (current US$)', 'Agricultural machinery, tractors', 'Access to electricity, rural (% of rural population)', 'Agricultural land (% of land area)', 'Rural population (% of total population)', 'Agricultural raw materials imports (% of merchandise imports)', 'Agricultural raw materials exports (% of merchandise exports)']
+selected_attributes = ['crop_production_index', 'food_production_index', 'GDP per capita (current US$)', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural population (% of total population)', 'Agricultural raw materials imports (% of merchandise imports)', 'Agricultural raw materials exports (% of merchandise exports)']
 
 def compute_average():
     global agri_df
     global country_avg_df
-    country_avg_df = agri_df.groupby('Country Name', as_index=False).mean()
+    country_avg_df = agri_df.groupby('Country_Name', as_index=False).mean()
 
 
 def sort_countries(field_name):
@@ -78,7 +78,7 @@ def sort_countries(field_name):
     # print(field_name)
     # temp_df = agri_df.copy(deep = True)
 
-    filtered_df = country_avg_df.filter(['Country Name', field_name])
+    filtered_df = country_avg_df.filter(['Country_Name', field_name])
     sorted_df = filtered_df.sort_values(field_name, ascending=False)
     # print('------------------ sorted df --------------')
     # print(sorted_df)
@@ -99,7 +99,7 @@ def agriBarData():
         field = reqbody["attribute"]
     
     top10ForField = top_10[field]
-    top10ForField.rename(columns = {'Country Name':'country', field:'value'}, inplace = True)
+    top10ForField.rename(columns = {'Country_Name':'country', field:'value'}, inplace = True)
     jsonStr = json.dumps(top10ForField.to_dict(orient="records"))
     return jsonStr
 
@@ -176,7 +176,7 @@ def get_agri_mds():
     global df_mds_corr
     global country_avg_df
     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    df_kept = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
     # mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     corr_mat = 1 - np.abs(df_kept.corr())
     mds_fitted_pc = mds_pc.fit(corr_mat)
@@ -196,7 +196,7 @@ def get_agri_mds():
 def get_corr_values():
     global agri_df
     # mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-    # df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    # df_kept = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
     # mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
     # df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
     # df_mds_corr['fields'] = df_kept.columns
@@ -251,15 +251,15 @@ def get_agri_pcp_data():
         dates = request.get_json()
     
     pcp_axis = [
-    #    'index', 'Country Name', 'Country Code', 'year',
-    #    'Access to electricity (% of population)',
+    #    'index', 'Country_Name', 'Country_Code', 'year',
+    #    'Access_to_electricity_percent',
        
         'GDP per capita (current US$)',
-       'Agricultural land (% of land area)',
-    #    'Agricultural land (sq. km)',
-    #    'Agricultural machinery, tractors',
-    #    'Agricultural machinery, tractors per 100 sq. km of arable land',
-    #    'Agricultural methane emissions (% of total)',
+       'agricultural_land_percent',
+    #    'agricultural_land_sq_km',
+    #    'agricultural_machinery_tractors',
+    #    'agricultural_machinery_tractors_100_sqkm',
+    #    'agricultural_methane_emissions_percent',
     #    'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
     #    'Agricultural nitrous oxide emissions (% of total)',
     #    'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
@@ -273,14 +273,14 @@ def get_agri_pcp_data():
     #    'Birth rate, crude (per 1,000 people)',
     #    'Cereal production (metric tons)',
     #    'Cereal yield (kg per hectare)',
-       'Crop production index (2004-2006 = 100)',
+       'crop_production_index',
     #    'Death rate, crude (per 1,000 people)',
     #    'Employment in agriculture (% of total employment) (modeled ILO estimate)',
     #    'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
     #    'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
-       'Food production index (2004-2006 = 100)',
+       'food_production_index',
     #    'Forest area (% of land area)', 'Forest area (sq. km)',
-    'Access to electricity, rural (% of rural population)',
+    'Access_to_electricity_rural_percent',
     #    'Land area (sq. km)',
     #    'Land under cereal production (hectares)',
        'Livestock production index (2004-2006 = 100)',
@@ -304,7 +304,7 @@ def get_agri_pcp_data():
     # temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
 
     # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP per capita (current US$)']]).labels_
-    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['Crop production index (2004-2006 = 100)']]).labels_
+    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['crop_production_index']]).labels_
     dataToReturn["pcpData"] = country_avg_df.to_dict(orient="records")
 
 
@@ -368,9 +368,9 @@ def get_agri_linechart_data():
 
     if country != "world":
         # print("is it going here???")
-        agri_line_df = agri_df.loc[agri_df["Country Code"]==country]
+        agri_line_df = agri_df.loc[agri_df["Country_Code"]==country]
     else:
-        agri_line_df = agri_df.loc[agri_df["Country Code"]=="USA"]
+        agri_line_df = agri_df.loc[agri_df["Country_Code"]=="USA"]
     d1 = agri_line_df.to_dict(orient="records")
     D = { "agriLineData":d1 }
     return json.dumps(D)
@@ -379,7 +379,7 @@ def get_agri_linechart_data():
 # def get_agri_mds():
 #     global agri_df
 #     mds_pc = MDS(n_components=2, dissimilarity='precomputed')
-#     df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+#     df_kept = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
 #     mds_fitted_pc = mds_pc.fit(1- np.abs(df_kept.corr()))
 #     df_mds_corr = pd.DataFrame.from_records(mds_fitted_pc.embedding_, columns=['x','y'])
 #     df_mds_corr['fields'] = df_kept.columns
@@ -425,13 +425,13 @@ def get_pcp_data():
     
     # pcp_axis = ["id","location", 'gdp_per_capita', 'stringency_index', 'human_development_index', 'median_age', 'hospital_beds_per_thousand', 'positive_rate', 'new_cases_per_million', 'new_deaths_per_million', 'new_vaccinations_smoothed_per_million']
     pcp_axis = [
-       'index', 'Country Name', 'Country Code', 'year',
-       'Access to electricity (% of population)',
-       'Access to electricity, rural (% of rural population)',
-       'Agricultural land (% of land area)', 'Agricultural land (sq. km)',
-       'Agricultural machinery, tractors',
-       'Agricultural machinery, tractors per 100 sq. km of arable land',
-       'Agricultural methane emissions (% of total)',
+       'index', 'Country_Name', 'Country_Code', 'year',
+       'Access_to_electricity_percent',
+       'Access_to_electricity_rural_percent',
+       'agricultural_land_percent', 'agricultural_land_sq_km',
+       'agricultural_machinery_tractors',
+       'agricultural_machinery_tractors_100_sqkm',
+       'agricultural_methane_emissions_percent',
        'Agricultural methane emissions (thousand metric tons of CO2 equivalent)',
        'Agricultural nitrous oxide emissions (% of total)',
        'Agricultural nitrous oxide emissions (thousand metric tons of CO2 equivalent)',
@@ -442,12 +442,12 @@ def get_pcp_data():
        'Arable land (% of land area)', 'Arable land (hectares per person)',
        'Arable land (hectares)', 'Birth rate, crude (per 1,000 people)',
        'Cereal production (metric tons)', 'Cereal yield (kg per hectare)',
-       'Crop production index (2004-2006 = 100)',
+       'crop_production_index',
        'Death rate, crude (per 1,000 people)',
        'Employment in agriculture (% of total employment) (modeled ILO estimate)',
        'Employment in agriculture, female (% of female employment) (modeled ILO estimate)',
        'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
-       'Food production index (2004-2006 = 100)',
+       'food_production_index',
        'Forest area (% of land area)', 'Forest area (sq. km)',
        'GDP per capita (current US$)', 'Land area (sq. km)',
        'Land under cereal production (hectares)',
