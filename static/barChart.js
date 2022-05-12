@@ -71,6 +71,7 @@ function setupBar(barChartData, selectedColumn) {
     plotInnerBar
     .append('g')
     // .attr('font-size', '18px')
+    .style("font", "14px times")
     .attr('transform', 'translate(' + 0 + ', ' + innerHeightBarChart + ')')
     .attr('class', 'x axis') // note: two classes; handy!
     .call(xCatAxis)
@@ -135,7 +136,12 @@ function updateBar(barChartData, selectedColumn) {
       .paddingInner(0.2)
       .paddingOuter(0.1)
     //   .range([0, innerWidth])
-      xCatAxis = d3.axisBottom(xCatScale)
+      
+    xCatAxis = d3.axisBottom(xCatScale)
+
+    // plotOuterBar.append("g").attr('font-size', '18px')
+    
+    // plotOuterBar.append("g").attr('font-size', '18px').attr('fill', 'white').call(d3.axisBottom(xCatScale))
 
     // ymax = d3.max(barData, function(d){return d.count});
     // yCatScale.domain([0, ymax + 10])
@@ -152,7 +158,8 @@ function updateBar(barChartData, selectedColumn) {
         .select('.x.axis')
         .transition()
         // .attr('stroke', 'white')
-        .attr('font-size', '18px')
+        // .attr('font-size', '18px')
+        .style("font", "14px times")
         .duration(transitionTime)
         .call(xCatAxis)
     plotInnerBar
