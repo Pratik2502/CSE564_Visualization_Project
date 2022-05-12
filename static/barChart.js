@@ -10,6 +10,7 @@ var plotInnerBar;
 
 
 function setupBar(barChartData, selectedColumn) {
+    document.getElementById("bar_chart_attr_title").innerHTML = barChartAttr
     d3.select("#bar").html("")
 
     plotOuterBar = d3
