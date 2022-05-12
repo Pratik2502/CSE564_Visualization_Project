@@ -120,7 +120,7 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "15px")
+        .attr("font-size", "18px")
         .text("Year");
 
     plotInner.append("g")
