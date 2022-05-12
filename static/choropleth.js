@@ -5,8 +5,10 @@ function createChoropleth(data, attr, countries) {
 
     attr = selected_attr
 
-    var width = 650;
-    var height = 338;
+    // var width = 650;
+    var width = 980;
+    // var height = 338;
+    var height = 525;
 
     // var lowColor = 'rgb(250, 197, 173)'
     var lowColor = 'rgb(222, 235, 247)'
@@ -111,7 +113,8 @@ function createChoropleth(data, attr, countries) {
     // D3 Projection
     var projection = d3.geoMercator()
         .translate([(width) / 2 - 20, height / 2 + 50])
-        .scale([90]);
+        // .scale([250]);
+        .scale([150]);
 
     var zoom = d3.zoom()
         .scaleExtent([1, 9])
