@@ -71,15 +71,17 @@ def normalise():
     global agri_df
     df_kept = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
     normalised_df = (df_kept - df_kept.min()) / (df_kept.max() - df_kept.min()) * 100
-    print('Normalised df: ', normalised_df)
+    # print('Normalised df: ', normalised_df)
     # agri_df.merge(normalised_df.rename(columns=lambda x: {x: 'normalised ' + x}), left_index=True, right_index=True )
     # df.toDF(*newColumns)
     columns = normalised_df.columns
-    new_columns = ['normalised ' + column for column in columns]
-    print('columns: ', columns)
-    print('new_columns: ', new_columns)
+    new_columns = ['normalised_' + column for column in columns]
+    # print('columns: ', columns)
+    # print('new_columns: ', new_columns)
     normalised_df.columns = new_columns
-    print('normalised_df: ', normalised_df)
+    # print('normalised_df: ', normalised_df)
+    agri_df = pd.concat([agri_df, normalised_df], axis=1, join='inner')
+    # print('final_df: ', agri_df)
 
     
 
