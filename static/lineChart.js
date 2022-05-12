@@ -1,9 +1,21 @@
-var outerWidthLine = 1080,
+var outerWidthLine = 880,
     outerHeightLine = 420
-var marginUpperLineChart = { top: 100, right: 300, bottom: 100, left: 140 }
+var marginUpperLineChart = { top: 70, right: 90, bottom: 10, left: 80 }
 var marginBottomLineChart = { top: 255, right: 300, bottom: 50, left: 40 }
-var innerWidthLine = outerWidthLine - marginUpperLineChart.left - marginUpperLineChart.right - 10
+var innerWidthLine = outerWidthLine - marginUpperLineChart.left - marginUpperLineChart.right
 var innerHeightLine = outerHeightLine - marginUpperLineChart.top - marginUpperLineChart.bottom - 20
+
+function clickedLabel(event) {
+    console.log("this was called")
+    let currElement = document.getElementById(event.id);
+    console.log("  opacity:::: " + currElement.style.opacity);
+    if(currElement.style.opacity == 1) {
+        currElement.style.opacity = 0.5;
+    }
+    else {
+        currElement.style.opacity = 1;
+    }
+}
 
 function createLineChart(lineChartData, selectedAttr) {
     // console.log("==============================");
@@ -25,7 +37,6 @@ function createLineChart(lineChartData, selectedAttr) {
         .append('g')
         .attr('id', 'inner-plot')
         .attr('width', innerWidthLine)
-        // .attr('class', 'linebubblechart')
         .attr('height', innerHeightLine)
         .attr('transform', 'translate(' + marginUpperLineChart.left + ',' + marginUpperLineChart.top + ')')
 
@@ -341,9 +352,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(0))
             .attr('stroke-width', '2')
         
+        document.getElementById("cropProdIdxlabel").style.opacity = 1;
+
         // plotInner.selectAll('.pointcrop_production_index').style("visibility", "hidden")
         plotInner.selectAll(".point_normalised_crop_production_index")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("cropProdIdxlabel").style.opacity = 0.5;
     }
     
     if(document.getElementById("foodProdIdx").checked) {
@@ -354,9 +370,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('fill', 'none')
             .attr('stroke', color(1))
             .attr('stroke-width', '2')
+
+        document.getElementById("foodProdIdxLabel").style.opacity = 1;
         
         plotInner.selectAll(".point_normalised_food_production_index")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("foodProdIdxLabel").style.opacity = 0.5;
     }
     
     if(document.getElementById("arableLand").checked) {
@@ -368,9 +389,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(2))
             .attr('stroke-width', '2')
         
+        document.getElementById("arableLandLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_Arable_land_percent")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("arableLandLabel").style.opacity = 0.5;
     }
 
     if(document.getElementById("agriculturalLand").checked) {
@@ -382,9 +408,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(3))
             .attr('stroke-width', '2')
         
+        document.getElementById("agriculturalLandLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_agricultural_land_percent")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("agriculturalLandLabel").style.opacity = 0.5;
     }
 
     if(document.getElementById("accessToElectricity").checked) {
@@ -396,9 +427,15 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(4))
             .attr('stroke-width', '2')
         
+        
+        document.getElementById("accessToElectricityLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_Access_to_electricity_rural_percent")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("accessToElectricityLabel").style.opacity = 0.5;
     }
 
     if(document.getElementById("agriMachinery").checked) {
@@ -410,9 +447,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(5))
             .attr('stroke-width', '2')
         
+        document.getElementById("agriMachineryLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_agricultural_machinery_tractors_100_sqkm")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("agriMachineryLabel").style.opacity = 0.5;
     }
     
     if(document.getElementById("gdp").checked) {
@@ -424,9 +466,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(6))
             .attr('stroke-width', '2')
         
+        document.getElementById("gdpLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_GDP_per_capita")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("gdpLabel").style.opacity = 0.5;
     }
 
     if(document.getElementById("agriImports").checked) {
@@ -438,9 +485,14 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(7))
             .attr('stroke-width', '2')
         
+        document.getElementById("agriImportsLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_Agricultural_raw_materials_imports_percent")
             .attr("opacity", 1)
+    }
+    else {
+        document.getElementById("agriImportsLabel").style.opacity = 0.5;
     }
 
     if(document.getElementById("agriExports").checked) {
@@ -452,10 +504,29 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', color(8))
             .attr('stroke-width', '2')
         
+            document.getElementById("agriExportsLabel").style.opacity = 1;
+
         // agricultural_land_percent
         plotInner.selectAll(".point_normalised_Agricultural_raw_materials_exports_percent")
             .attr("opacity", 1)
     }
+    else {
+        document.getElementById("agriExportsLabel").style.opacity = 0.5;
+    }
+
+
+
+
+
+
+    
+
+
+    // document.getElementById("cropProdIdxlabel").style.opacity
+
+
+
+
 
     worldMapTrigger.registerListener(function(val) {
         resetLineChart()
