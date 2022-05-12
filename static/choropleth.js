@@ -159,8 +159,8 @@ function createChoropleth(data, attr, countries) {
     var countries_path_arr = paths._groups[0]
 
     // add a legend
-    var w = 50,
-        h = 300;
+    var w = 60,
+        h = 400;
 
     var key = d3.select("#worldmap-legend-svg")
         .append("svg")
