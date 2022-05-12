@@ -127,22 +127,23 @@ function resetLineChart() {
 resetLineChart()
 
 
-// 
-$.ajax({
-    type: "GET",
-    url: "/agriPcp",
-    contentType: "application/json",
-    dataType: "json",
-    success: function(response) {
-        console.log("         --- Called agriPcp ---        ");
-        // console.log(response);
-        plot_pcp(response["pcpData"], response["order"])
-    },
-    error: function(err) {
-        console.log(err);
-    }
-});
-
+function resetPcpPlot() {
+    $.ajax({
+        type: "GET",
+        url: "/agriPcp",
+        contentType: "application/json",
+        dataType: "json",
+        success: function(response) {
+            console.log("         --- Called agriPcp ---        ");
+            // console.log(response);
+            plot_pcp(response["pcpData"], response["order"])
+        },
+        error: function(err) {
+            console.log(err);
+        }
+    });
+}
+resetPcpPlot()
 
 
 $.ajax({

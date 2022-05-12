@@ -17,12 +17,36 @@ function clickedLabel(event) {
     }
 }
 
+function blankLineChart() {
+    document.getElementById("cropProdIdx").checked = true
+    document.getElementById("foodProdIdx").checked = false
+    document.getElementById("arableLand").checked = false
+    document.getElementById("agriculturalLand").checked = false
+    document.getElementById("accessToElectricity").checked = false
+    document.getElementById("agriMachinery").checked = false
+    document.getElementById("gdp").checked = false
+    document.getElementById("agriImports").checked = false
+    document.getElementById("agriExports").checked = false
+}
+
 function createLineChart(lineChartData, selectedAttr) {
     // console.log("==============================");
     // console.log("entered line chart method");
     // console.log(lineChartData);
     // console.log("===============");
     // console.log(selectedAttr);
+
+    // REFRESHING CHECKBOXES HERE
+    
+
+    if(locationIDMap[worldmap_country] == "world") {
+        document.getElementById("selectedCountryName").innerHTML = locationIDMap["USA"];
+    }
+    else {
+        document.getElementById("selectedCountryName").innerHTML = locationIDMap[worldmap_country];
+    }
+    
+    // document.getElementById("selectedCountryName").innerHTML = "UNITED STATES OF";
 
     data = lineChartData
     

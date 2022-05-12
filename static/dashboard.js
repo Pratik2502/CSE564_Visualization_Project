@@ -32,6 +32,10 @@ function resetDashboard(){
     });
 
     resetLineChart()
+    resetPcpPlot()
+    resetBarChart()
+    blankLineChart()
+
     // $.ajax({
     //     type: "GET",
     //     url: "/agriLineChart",
