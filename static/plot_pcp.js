@@ -28,7 +28,21 @@ function plot_pcp(pcp_data, order){
         
     var svg = plotInner;
         
-        
+
+    var pcpToolTip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([0, 20])
+        .html(function(d) {
+            // console.log(d);
+            const country = d["Country_Name"]
+            // const origAttr = currattr.replace("normalised_","");
+            // return "<strong>" + origAttr + " : </strong><span class='details'>" + displayFloat(d["dataObj"][origAttr]) + "<br></span>";
+            return "<strong>Country : </strong><span class='details'>"+country+"<br></span>"
+        });
+    plotInner.call(pcpToolTip);
+    
+
+
     order = order.slice(0, 6);
 
 
@@ -51,7 +65,7 @@ function plot_pcp(pcp_data, order){
     var color = d3.scaleOrdinal(d3.schemeSet2);
 
     var highlight = function(d){
-
+        pcpToolTip.show(d);
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
         selected_cluster = d.cluster
         // selected_cluster = 0
@@ -62,6 +76,7 @@ function plot_pcp(pcp_data, order){
         .style("stroke", "lightgrey")
         .style("stroke-width", 2.5)
         .style("opacity", "0.2")
+        .style("cursor","pointer")
 
         // console.log(selected_cluster)
         svg.selectAll(".cluster" + selected_cluster)
@@ -73,6 +88,7 @@ function plot_pcp(pcp_data, order){
 
     // Unhighlight
     var doNotHighlight = function(d){
+        pcpToolTip.hide(d);
         svg.selectAll(".line")
         .transition().duration(200).delay(200)
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
@@ -80,6 +96,7 @@ function plot_pcp(pcp_data, order){
         .style("stroke-width", 2.5)
         // .style("stroke", function(d) { return (color(0)) })
         .style("opacity", "0.6")
+        .style("cursor","pointer")
     }
 
     // Add grey background lines for context.
@@ -122,6 +139,7 @@ function plot_pcp(pcp_data, order){
                     .style("stroke", "lightgrey")
                     .style("stroke-width", 2.5)
                     .style("opacity", "0.2")
+                    .style("cursor","pointer")
                 dragging[d] = x(d);
                 // background.attr("visibility", "hidden");
             })
@@ -142,6 +160,7 @@ function plot_pcp(pcp_data, order){
                     // TODO
                     .style("stroke", function(d){ return( color(d.cluster))} )
                     .style("stroke-width", 2.5)
+                    .style("cursor","pointer")
                     // .style("stroke", function(d){ return( color(0))} )
                     .style("opacity", "0.6")
             }));
