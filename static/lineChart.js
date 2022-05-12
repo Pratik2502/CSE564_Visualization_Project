@@ -6,10 +6,10 @@ var innerWidthLine = outerWidthLine - marginUpperLineChart.left - marginUpperLin
 var innerHeightLine = outerHeightLine - marginUpperLineChart.top - marginUpperLineChart.bottom - 20
 
 function createLineChart(lineChartData, selectedAttr) {
-    console.log("==============================");
-    console.log("entered line chart method");
-    console.log(lineChartData);
-    console.log("===============");
+    // console.log("==============================");
+    // console.log("entered line chart method");
+    // console.log(lineChartData);
+    // console.log("===============");
     // console.log(selectedAttr);
 
     data = lineChartData

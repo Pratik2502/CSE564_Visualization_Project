@@ -65,11 +65,11 @@ bottom_10 = dict()
 country_avg_df = None
 df_mds_corr = None
 
-selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials exports_percent']
+selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials_exports_percent']
 
 def normalise():
     global agri_df
-    df_kept = agri_df.drop(['Country Name', 'Country Code'], axis=1 )
+    df_kept = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
     normalised_df = (df_kept - df_kept.min()) / (df_kept.max() - df_kept.min()) * 100
     print('Normalised df: ', normalised_df)
     # agri_df.merge(normalised_df.rename(columns=lambda x: {x: 'normalised ' + x}), left_index=True, right_index=True )
@@ -282,7 +282,7 @@ def get_agri_pcp_data():
     #    '',
     #    'Agricultural_nitrous_oxide_emissions_percent',
     #    'Agricultural_nitrous_oxide_emissions',
-       'Agricultural_raw_materials exports_percent',
+       'Agricultural_raw_materials_exports_percent',
        'Agricultural_raw_materials_imports_percent',
     #    'Agriculture_forestry_fishing_value_in_gdp',
     #    'Agriculture_forestry_fishing_value_added_in_USD',
@@ -455,7 +455,7 @@ def get_pcp_data():
        'Agricultural_methane_emissions',
        'Agricultural_nitrous_oxide_emissions_percent',
        'Agricultural_nitrous_oxide_emissions',
-       'Agricultural_raw_materials exports_percent',
+       'Agricultural_raw_materials_exports_percent',
        'Agricultural_raw_materials_imports_percent',
        'Agriculture_forestry_fishing_value_in_gdp',
        'Agriculture_forestry_fishing_value_added_in_USD',
