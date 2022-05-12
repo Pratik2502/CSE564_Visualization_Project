@@ -63,7 +63,7 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
     let minValNegCorr = d3.min(mds_corr_values.filter(d => d["value"] < 0), function(d) { return d["value"] });
     let maxValNegCorr = d3.max(mds_corr_values.filter(d => d["value"] < 0), function(d) { return d["value"] });
     
-    var rampNeg = d3.scaleSqrt().domain([minValNegCorr, maxValNegCorr]).range([lowColorNeg, highColorNeg])
+    var rampNeg = d3.scaleSqrt().domain([minValNegCorr, maxValNegCorr]).range([highColorNeg, lowColorNeg])
 
 
     
