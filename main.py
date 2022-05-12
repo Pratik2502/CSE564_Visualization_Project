@@ -6,9 +6,11 @@ from scipy.spatial.distance import squareform
 
 import matplotlib.pyplot as plt 
 from sklearn.manifold import MDS
+from sklearn.cluster import KMeans
+# from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
-import json
+import json, math
 import geojson
 import random
 
@@ -195,7 +197,7 @@ def get_corr_values():
 
     temp_df = df_mds_corr.loc[df_mds_corr['fields'].isin(selected_attributes)]
     temp2_df = temp_df.drop(columns = 'fields')
-    print(temp_df)
+    # print(temp_df)
 
     corr_matrix = squareform(pdist(temp2_df))
 
@@ -205,7 +207,7 @@ def get_corr_values():
             if i > j:
                 res.append({'field1': field, 'field2': field2, 'value': corr_matrix[i][j]})
 
-    print(res)
+    # print(res)
     #pairwise = pd.Dataframe(corr_matrix, columns = df_mds_corr['fields'], index = df_mds_corr['fields'])
     #return json.dumps(pairwise.to_dict(orient = "records"))
 
@@ -216,6 +218,7 @@ def get_corr_values():
 
 @app.route("/agriPcp", methods=["POST" , "GET"])
 def get_agri_pcp_data():
+    global country_avg_df
     global agri_df
     
     if(request.method == 'POST'):
@@ -269,10 +272,28 @@ def get_agri_pcp_data():
     # return json.dumps(pcp_data_temp.to_dict(orient="records"))
     dataToReturn = {}
     dataToReturn["order"] = pcp_axis
-    dataToReturn["pcpData"] = agri_df.to_dict(orient="records")
-    # dataToReturn['clusters'] = KMeans(n_clusters=2).fit(dataToReturn).labels_
-    # cluster1 = dataToReturn[dataToReturn["clusters"] == 0].sample(number // 2, replace = True)
-    # cluster2 = dataToReturn[dataToReturn["clusters"] == 1].sample(number - (number // 2), replace = True)
+    
+
+    temp_df = country_avg_df.filter(items = selected_attributes)
+    temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
+    dataToReturn["pcpData"] = temp_df.to_dict(orient="records")
+
+
+    # print('--------------------- temp_df -------------------: ', temp_df)
+    # number = country_avg_df.shape[0]
+    # cluster1 = temp_df[temp_df["clusters"] == 0].sample(number // 2, replace = True)
+    # cluster2 = temp_df[temp_df["clusters"] == 1].sample(number - (number // 2), replace = True)
+    # data = pd.DataFrame([], columns=pcp_axis)
+    # data = pd.concat([data, cluster1], ignore_index=True)
+    # data = pd.concat([data, cluster2], ignore_index=True)
+
+    # print('--------------------- data -------------------: ', data)
+    # output = pd.DataFrame(np.append(MDS(n_components=2,dissimilarity="euclidean").fit_transform(StandardScaler().fit_transform(data.drop(["clusters"],axis=1))), data['clusters'].values.reshape(math.ceil(data.shape[0]), 1), axis=1),columns=pcp_axis)
+    
+
+    # print('---------------------- output --------------:', output)
+    # dataToReturn["pcpData"] = output.to_dict(orient = "records")
+
     return json.dumps(dataToReturn)
 
 
@@ -314,10 +335,10 @@ def get_agri_linechart_data():
     if(request.method == 'POST'):
         reqbody = request.get_json()
         country = reqbody["country"]
-        print(country)
+        # print(country)
 
     if country != "world":
-        print("is it going here???")
+        # print("is it going here???")
         agri_line_df = agri_df.loc[agri_df["Country Code"]==country]
     else:
         agri_line_df = agri_df.loc[agri_df["Country Code"]=="USA"]
