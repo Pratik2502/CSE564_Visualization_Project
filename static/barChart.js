@@ -71,13 +71,16 @@ function setupBar(barChartData, selectedColumn) {
     plotInnerBar
     .append('g')
     // .attr('font-size', '18px')
-    .style("font", "14px times")
+    .style("font-size", "18px")
     .attr('transform', 'translate(' + 0 + ', ' + innerHeightBarChart + ')')
+    .attr("stroke", "white")
     .attr('class', 'x axis') // note: two classes; handy!
     .call(xCatAxis)
 
     plotInnerBar
     .append('g')
+    .style("font-size", "18px")
+    .attr("stroke", "white")
     .attr('class', 'y axis')
     .call(yCatAxis)
     
@@ -89,7 +92,7 @@ function setupBar(barChartData, selectedColumn) {
     .attr('text-anchor', 'middle')
     // .text(longVars[xvar])
     .attr("fill", "white")
-    .attr("font-size", "18")
+    .style("font-size", "24px")
     .text("Top 10 Countries")
 
     plotOuterBar
@@ -104,7 +107,7 @@ function setupBar(barChartData, selectedColumn) {
       `rotate(-90 ${marginsBar.left / 2} ${marginsBar.bottom + innerHeightBarChart / 2})`
     )
     .attr("fill", "white")
-    .attr("font-size", "18")
+    .style("font-size", "24px")
     .text(selectedColumn)
 
   }
@@ -156,15 +159,17 @@ function updateBar(barChartData, selectedColumn) {
     // update axes
     plotInnerBar
         .select('.x.axis')
+        .style('font-size', '18px')
+        .attr('stroke', 'white')
         .transition()
-        // .attr('stroke', 'white')
-        // .attr('font-size', '18px')
-        .style("font", "14px times")
+        // .style("font", "14px times")
         .duration(transitionTime)
         .call(xCatAxis)
     plotInnerBar
         .select('.y.axis')
         .transition()
+        .style('font-size', '18px')
+        .attr('stroke', 'white')
         // .attr('stroke', 'white')
         .duration(transitionTime)
         .call(yCatAxis)
@@ -172,11 +177,13 @@ function updateBar(barChartData, selectedColumn) {
  // axis labels
     plotOuterBar
         .selectAll('text.y.axis') // select text elements with two both classes
+        .style('font-size', '18px')
         .transition()
         .duration(transitionTime)
 
     plotOuterBar
         .selectAll('text.x.axis')
+        .style('font-size', '18px')
         .transition()
         .duration(transitionTime)
         // .text(longVars[xvar])
