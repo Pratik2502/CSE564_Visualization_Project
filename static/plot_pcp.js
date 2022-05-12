@@ -1,5 +1,5 @@
 var outerWidthpcp = 1000, outerHeightpcp = 600,
-    marginspcp = {top: 50, right: 50, bottom: 5, left: 50},
+    marginspcp = {top: 50, right: 80, bottom: 5, left: 80},
     innerWidthpcp = outerWidthpcp - marginspcp.left - marginspcp.right,
     innerHeightpcp = outerHeightpcp - marginspcp.top - marginspcp.bottom;
 
@@ -60,14 +60,15 @@ function plot_pcp(pcp_data, order){
         svg.selectAll(".line")
         .transition().duration(200)
         .style("stroke", "lightgrey")
-        .style("stroke-width", 2)
+        .style("stroke-width", 2.5)
         .style("opacity", "0.2")
+
         // console.log(selected_cluster)
         svg.selectAll(".cluster" + selected_cluster)
         .transition().duration(200)
         .style("stroke", color(selected_cluster))
-        .style("stroke-width", 2)
-        .style("opacity", "0.4")
+        .style("stroke-width", 2.5)
+        .style("opacity", "0.6")
     }
 
     // Unhighlight
@@ -76,9 +77,9 @@ function plot_pcp(pcp_data, order){
         .transition().duration(200).delay(200)
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
         .style("stroke", function(d){ return( color(d.cluster))} )
-        .style("stroke-width", 2)
+        .style("stroke-width", 2.5)
         // .style("stroke", function(d) { return (color(0)) })
-        .style("opacity", "0.4")
+        .style("opacity", "0.6")
     }
 
     // Add grey background lines for context.
@@ -103,7 +104,7 @@ function plot_pcp(pcp_data, order){
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
         .style('stroke', function(d) { return color(d.cluster); })
         // .style('stroke', function(d) { return color(0); })
-        .style("opacity", 0.4)
+        .style("opacity", 0.6)
         .on("mouseover", highlight)
         .on("mouseleave", doNotHighlight );
         
@@ -119,7 +120,7 @@ function plot_pcp(pcp_data, order){
                 svg.selectAll(".line")
                     .transition().duration(200)
                     .style("stroke", "lightgrey")
-                    .style("stroke-width", 2)
+                    .style("stroke-width", 2.5)
                     .style("opacity", "0.2")
                 dragging[d] = x(d);
                 // background.attr("visibility", "hidden");
@@ -140,9 +141,9 @@ function plot_pcp(pcp_data, order){
                     .transition().duration(200).delay(200)
                     // TODO
                     .style("stroke", function(d){ return( color(d.cluster))} )
-                    .style("stroke-width", 2)
+                    .style("stroke-width", 2.5)
                     // .style("stroke", function(d){ return( color(0))} )
-                    .style("opacity", "0.4")
+                    .style("opacity", "0.6")
             }));
         
         // Add an axis and title.
@@ -153,7 +154,7 @@ function plot_pcp(pcp_data, order){
             .style("text-anchor", "middle")
             .attr("transform", "rotate(-10)")
             .attr("fill", "white")
-            .attr("font-size", "13")
+            .attr("font-size", "18")
             .attr("y", -9)
             .text(function (d) { return d; });
 
