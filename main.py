@@ -227,7 +227,8 @@ def get_agri_pcp_data():
     pcp_axis = [
     #    'index', 'Country Name', 'Country Code', 'year',
     #    'Access to electricity (% of population)',
-       'Access to electricity, rural (% of rural population)',
+       
+        'GDP per capita (current US$)',
        'Agricultural land (% of land area)',
     #    'Agricultural land (sq. km)',
     #    'Agricultural machinery, tractors',
@@ -253,7 +254,7 @@ def get_agri_pcp_data():
     #    'Employment in agriculture, male (% of male employment) (modeled ILO estimate)',
        'Food production index (2004-2006 = 100)',
     #    'Forest area (% of land area)', 'Forest area (sq. km)',
-       'GDP per capita (current US$)',
+    'Access to electricity, rural (% of rural population)',
     #    'Land area (sq. km)',
     #    'Land under cereal production (hectares)',
        'Livestock production index (2004-2006 = 100)',
@@ -273,10 +274,12 @@ def get_agri_pcp_data():
     dataToReturn = {}
     dataToReturn["order"] = pcp_axis
     
+    # temp_df = country_avg_df.filter(items = selected_attributes)
+    # temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
 
-    temp_df = country_avg_df.filter(items = selected_attributes)
-    temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
-    dataToReturn["pcpData"] = temp_df.to_dict(orient="records")
+    # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP per capita (current US$)']]).labels_
+    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['Crop production index (2004-2006 = 100)']]).labels_
+    dataToReturn["pcpData"] = country_avg_df.to_dict(orient="records")
 
 
     # print('--------------------- temp_df -------------------: ', temp_df)

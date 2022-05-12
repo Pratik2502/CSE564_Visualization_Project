@@ -53,28 +53,31 @@ function plot_pcp(pcp_data, order){
     var highlight = function(d){
 
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
-        // selected_cluster = d.cluster
-        selected_cluster = 0
+        selected_cluster = d.cluster
+        // selected_cluster = 0
 
         // first every group turns grey
         svg.selectAll(".line")
         .transition().duration(200)
         .style("stroke", "lightgrey")
+        .style("stroke-width", 2)
         .style("opacity", "0.2")
         // console.log(selected_cluster)
         svg.selectAll(".cluster" + selected_cluster)
         .transition().duration(200)
         .style("stroke", color(selected_cluster))
+        .style("stroke-width", 2)
         .style("opacity", "0.4")
     }
 
     // Unhighlight
     var doNotHighlight = function(d){
         svg.selectAll(".line")
-        .transition().duration(200).delay(1000)
+        .transition().duration(200).delay(200)
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
-        // .style("stroke", function(d){ return( color(d.cluster))} )
-        .style("stroke", function(d) { return (color(0)) })
+        .style("stroke", function(d){ return( color(d.cluster))} )
+        .style("stroke-width", 2)
+        // .style("stroke", function(d) { return (color(0)) })
         .style("opacity", "0.4")
     }
 
@@ -95,11 +98,11 @@ function plot_pcp(pcp_data, order){
         .append("path")
         .attr("d", line)
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
-        // .attr("class", function (d) { return "line cluster" + d.cluster } )
-        .attr("class", function (d) { return "line cluster" + 0 } )
+        .attr("class", function (d) { return "line cluster" + d.cluster } )
+        // .attr("class", function (d) { return "line cluster" + 0 } )
         // TODO: removed clustering for now, everyone belongs to default cluster of 0
-        // .style('stroke', function(d) { return color(d.cluster); })
-        .style('stroke', function(d) { return color(0); })
+        .style('stroke', function(d) { return color(d.cluster); })
+        // .style('stroke', function(d) { return color(0); })
         .style("opacity", 0.4)
         .on("mouseover", highlight)
         .on("mouseleave", doNotHighlight );
@@ -116,6 +119,7 @@ function plot_pcp(pcp_data, order){
                 svg.selectAll(".line")
                     .transition().duration(200)
                     .style("stroke", "lightgrey")
+                    .style("stroke-width", 2)
                     .style("opacity", "0.2")
                 dragging[d] = x(d);
                 // background.attr("visibility", "hidden");
@@ -133,10 +137,11 @@ function plot_pcp(pcp_data, order){
                 transition(foreground).attr("d", line);
 
                 svg.selectAll(".line")
-                    .transition().duration(200).delay(1000)
+                    .transition().duration(200).delay(200)
                     // TODO
-                    // .style("stroke", function(d){ return( color(d.cluster))} )
-                    .style("stroke", function(d){ return( color(0))} )
+                    .style("stroke", function(d){ return( color(d.cluster))} )
+                    .style("stroke-width", 2)
+                    // .style("stroke", function(d){ return( color(0))} )
                     .style("opacity", "0.4")
             }));
         

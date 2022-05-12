@@ -36,28 +36,9 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
         .attr("font-size", "24px")
         .text("Attributes MDS Plot using Correlation")
 
-    // mds_corr_data.forEach(function(p1, i1) {
-    //     mds_corr_data.forEach(function(p2, i2) {
-    //         if (i1 !== i2) {
-    //             plotInnercorr.append("line")
-    //                 .attr('class', "line " + p1.fields + "-" + p2.fields + " " + p2.fields + "-" + p1.fields)
-    //                 .attr('x1', xScale(p1.x))
-    //                 .attr('y1', yScale(p1.y))
-    //                 .attr('x2', xScale(p2.x))
-    //                 .attr('y2', yScale(p2.y))
-    //                 .style('stroke', 'lightgrey')
-    //                 .style("visibility", "hidden")
-    //         }
-    //     });
-    // });
-
-
-
     function getCoordinatesForAttr(attrName, mds_corr_data) {
         coords = {}
         coordObj = mds_corr_data.filter(objs => objs["fields"] == attrName);
-        // console.log("          !!!!!!!!!!!   p1   !!!!!!!!!!             ");
-        // console.log(coordObj);
         if(coordObj == undefined || coordObj == null)
             return null;
         coords["x"] = coordObj[0]["x"];
