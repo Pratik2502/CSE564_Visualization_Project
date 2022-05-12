@@ -67,7 +67,7 @@ df_mds_corr = None
 time_series_df = None
 
 selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors_100_sqkm', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials_exports_percent', 'Arable_land_percent']
-selected_attributes_dict = {'crop_production_index': 1, 'food_production_index': 1, 'GDP_per_capita': 0.001, 'agricultural_machinery_tractors_100_sqkm': 0.1, 'Access_to_electricity_rural_percent': 1, 'agricultural_land_percent': 1, 'Rural_population_percent': 1, 'Agricultural_raw_materials_imports_percent': 10, 'Agricultural_raw_materials_exports_percent': 10, 'Arable_land_percent': 1}
+selected_attributes_dict = {'crop_production_index': 1, 'food_production_index': 1, 'GDP_per_capita': 0.004, 'agricultural_machinery_tractors_100_sqkm': 0.1, 'Access_to_electricity_rural_percent': 1, 'agricultural_land_percent': 1, 'Rural_population_percent': 1, 'Agricultural_raw_materials_imports_percent': 10, 'Agricultural_raw_materials_exports_percent': 10, 'Arable_land_percent': 1}
 
 def normalise2():
     global agri_df
@@ -79,7 +79,7 @@ def normalise2():
         print('column focused: ', col)
         time_series_df['normalised_' + col] = agri_df[col] * selected_attributes_dict[col]
     
-    print('time_series: ', time_series_df)
+    # print('time_series: ', time_series_df)
 
 
 
@@ -124,6 +124,7 @@ def compute_average():
     global agri_df
     global country_avg_df
     country_avg_df = agri_df.groupby('Country_Name', as_index=False).mean()
+    print('Country average df: ', country_avg_df)
 
 
 def sort_countries(field_name):
@@ -357,7 +358,7 @@ def get_agri_pcp_data():
     # temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
 
     # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
-    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['crop_production_index']]).labels_
+    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
     dataToReturn["pcpData"] = country_avg_df.to_dict(orient="records")
 
 
