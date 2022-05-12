@@ -4,6 +4,8 @@
 
 var outerWidthWorld = 760,
     outerHeightWorld = 450 / 760 * outerWidthWorld
+// var outerWidthWorld = 980,
+// outerHeightWorld = 485
 var marginsWorld = { top: 5, bottom: 20, left: 5, right: 20 }
 var innerWidthWorld = outerWidthWorld - marginsWorld.left - marginsWorld.right
 var innerHeightWorld = outerHeightWorld - marginsWorld.top - marginsWorld.bottom
