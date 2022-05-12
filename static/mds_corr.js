@@ -85,10 +85,26 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
     var rampNeg = d3.scaleSqrt().domain([minValNegCorr, maxValNegCorr]).range([lowColorNeg, highColorNeg])
 
 
+    
+
+    var tip = d3.tip()
+        .attr('class', 'd3-tip')
+        .offset([-10, 0])
+        // .transition()
+        // .duration(transitionTime)
+        .html(function(d) {
+            // console.log(d);
+            return "<strong>Attribute1: </strong><span class='details'>" + d["field1"] + "<br></span>" + "<strong>Attribute2: </strong><span class='details'>" + d["field2"] + "<br></span>" + "<strong>Correlation: </strong><span class='details'>" + displayFloat(d["value"]) + "</span>";
+            // return "<strong>This is some tooltip</strong>"
+        });
+
+    plotOutercorr.call(tip);
+
+
     mds_corr_values.forEach(function(obj) {
         
         
-        console.log(obj);
+        // console.log(obj);
         let p1 = getCoordinatesForAttr(obj["field1"], mds_corr_data)
         let p2 = getCoordinatesForAttr(obj["field2"], mds_corr_data)
 
@@ -102,7 +118,7 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
                     .attr('y1', yScale(p1.y))
                     .attr('x2', xScale(p2.x))
                     .attr('y2', yScale(p2.y))
-                    .style('stroke-width', 1.5)
+                    .style('stroke-width', 2)
                     // .style('stroke', 'lightgrey')
                     .style('stroke', function(d) {
                         if(obj["value"] >= 0) {
@@ -110,7 +126,13 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
                         }
                         return rampNeg(obj["value"]);
                     })
-                    // .style('fill', 'red')
+                    .style('cursor', 'pointer')
+                    .on("mouseover", function(d) {
+                        tip.show(obj);
+                    })
+                    .on("mouseout", function(d) {
+                        tip.hide(obj);
+                    })
                     .style("visibility", "visible")
             }
         }
@@ -123,8 +145,8 @@ function plot_mds_corr(mds_corr_data, mds_corr_values) {
 
     function handleClick(d, i){
         console.log("++++++++ handling click ++++++++");
-        console.log(d);
-        console.log(i);
+        // console.log(d);
+        // console.log(i);
         barChartAttr = d.fields;
         resetBarChart();
         // var curr = d3.select(this)
