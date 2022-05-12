@@ -132,22 +132,30 @@ function createLineChart(lineChartData, selectedAttr) {
     var yScale = d3.scaleLinear().range([innerHeightLine, 0]).domain([linedata_min-0.01*linedata_min, linedata_max+0.01*linedata_min])
 
     plotInner.append("g")
+        .style("font-size", "18px")
+        // .style("transform","rotate(-40)")
         .attr("transform", "translate(0," + innerHeightLine + ")")
+        .attr("stroke", "white")
         .call(d3.axisBottom(xScale))
+        // .selectAll("text")
+        // .attr("transform","rotate(-40)")
+
         .append("text")
         // .attr("y", margins.bottom / 2)
         // .attr("y", marginBottomLineChart.bottom)
-        .attr("y", 40)
+        .attr("y", 50)
         // .attr("x", innerWidth / 2)
         // .attr("x", innerWidthLine/2)
         .attr("x", 400)
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "18px")
+        .attr("font-size", "22px")
         .text("Year");
 
     plotInner.append("g")
+        .style("font-size", "18px")
+        .attr("stroke", "white")
         .call(d3.axisLeft(yScale)
         .tickFormat(function(d) {
             // return d*100 + '%';
@@ -165,7 +173,7 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr("text-anchor", "end")
         // .attr("stroke", "white")
         .attr("fill", "white")
-        .attr("font-size", "18px")
+        .attr("font-size", "22px")
         // .text(selectedAttr);
         .text("Selected Attributes in %");
 
