@@ -7,7 +7,7 @@ from scipy.spatial.distance import squareform
 import matplotlib.pyplot as plt 
 from sklearn.manifold import MDS
 from sklearn.cluster import KMeans
-# from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
 import json, math
@@ -35,7 +35,7 @@ bubble_data_path = os.path.join(curr_dir, os.path.join('data', "bubble_npi.csv")
 barchart_data_path = os.path.join(curr_dir, os.path.join('data', "world-seasonal-data.csv"))
 hashtags_data_path = os.path.join(curr_dir, os.path.join('data', "hashtags.csv"))
 
-agri_data_path = os.path.join(curr_dir, os.path.join('data', "reduced_data.xlsx"))
+agri_data_path = os.path.join(curr_dir, os.path.join('data', "reduced_data_new.xlsx"))
 
 with open(geo_json_path) as f:
     gj = geojson.load(f)
@@ -64,8 +64,40 @@ bottom_10 = dict()
 
 country_avg_df = None
 df_mds_corr = None
+time_series_df = None
 
-selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials_exports_percent']
+selected_attributes = ['crop_production_index', 'food_production_index', 'GDP_per_capita', 'agricultural_machinery_tractors_100_sqkm', 'Access_to_electricity_rural_percent', 'agricultural_land_percent', 'Rural_population_percent', 'Agricultural_raw_materials_imports_percent', 'Agricultural_raw_materials_exports_percent', 'Arable_land_percent']
+selected_attributes_dict = {'crop_production_index': 1, 'food_production_index': 1, 'GDP_per_capita': 0.001, 'agricultural_machinery_tractors_100_sqkm': 0.1, 'Access_to_electricity_rural_percent': 1, 'agricultural_land_percent': 1, 'Rural_population_percent': 1, 'Agricultural_raw_materials_imports_percent': 10, 'Agricultural_raw_materials_exports_percent': 10, 'Arable_land_percent': 1}
+
+def normalise2():
+    global agri_df
+    global selected_attributes_dict
+    global time_series_df
+
+    time_series_df = agri_df.copy(deep = True)
+    for col in selected_attributes_dict:
+        print('column focused: ', col)
+        time_series_df['normalised_' + col] = agri_df[col] * selected_attributes_dict[col]
+    
+    print('time_series: ', time_series_df)
+
+
+
+
+
+    # # make a copy of dataframe
+    # scaled_features = agri_df.drop(['Country_Name', 'Country_Code'], axis=1 )
+
+    # features = scaled_features[selected_attributes]
+
+    # # Use scaler of choice; here Standard scaler is used
+    # scaler = StandardScaler().fit(features.values)
+    # features = scaler.transform(features.values)
+
+    # scaled_features[selected_attributes] = features
+    # print(scaled_features[selected_attributes])
+
+
 
 def normalise():
     global agri_df
@@ -80,7 +112,7 @@ def normalise():
     # print('new_columns: ', new_columns)
     normalised_df.columns = new_columns
     # print('normalised_df: ', normalised_df)
-    agri_df = pd.concat([agri_df, normalised_df], axis=1, join='inner')
+    time_series_df = pd.concat([agri_df, normalised_df], axis=1, join='inner')
     # print('final_df: ', agri_df)
 
     
@@ -379,7 +411,7 @@ def get_worldmap_data():
 
 @app.route("/agriLineChart", methods=["GET","POST"])
 def get_agri_linechart_data():
-    global agri_df
+    global time_series_df
 
     country = "USA"
     if(request.method == 'POST'):
@@ -389,9 +421,9 @@ def get_agri_linechart_data():
 
     if country != "world":
         # print("is it going here???")
-        agri_line_df = agri_df.loc[agri_df["Country_Code"]==country]
+        agri_line_df = time_series_df.loc[agri_df["Country_Code"]==country]
     else:
-        agri_line_df = agri_df.loc[agri_df["Country_Code"]=="USA"]
+        agri_line_df = time_series_df.loc[agri_df["Country_Code"]=="USA"]
     d1 = agri_line_df.to_dict(orient="records")
     D = { "agriLineData":d1 }
     return json.dumps(D)
@@ -413,7 +445,7 @@ def home():
 
 
 if(__name__ == "__main__"):
-    normalise()
+    normalise2()
     compute_average()
     preprocess()
     preprocess_pcp_data()
