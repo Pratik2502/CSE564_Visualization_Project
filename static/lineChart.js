@@ -204,11 +204,12 @@ function createLineChart(lineChartData, selectedAttr) {
             .enter()
             .append("circle")
             // .attr("class", function(d) { "point" + d["Attribute"] })
-            .attr("class", function(d) { "point:" + d["Attribute"] })
+            .attr("class", function(d) { return "point_" + d["Attribute"] })
             .attr("cx", function(d) { return d["cx"]; })
             .attr("cy", function(d) { return d["cy"]; })
             .attr("r", 8)
-            .attr("visibility", "hidden")
+            // .attr("visibility", "hidden")
+            .attr("opacity", 0)
             .style("fill", function(d) { return d["fill"]; })
             .style('cursor', 'pointer')
             .on("mouseover", handleMouseOverCircle)
@@ -229,8 +230,6 @@ function createLineChart(lineChartData, selectedAttr) {
 
 
 
-    
-
     if(document.getElementById("cropProdIdx").checked) {
         plotInner.append('path')
             // .datum(data)
@@ -241,8 +240,8 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke-width', '2')
         
         // plotInner.selectAll('.pointcrop_production_index').style("visibility", "hidden")
-        d3.selectAll(".point:crop_production_index")
-            .attr("visibility", "visible")
+        plotInner.selectAll(".point_crop_production_index")
+            .attr("opacity", 1)
     }
     
     if(document.getElementById("foodProdIdx").checked) {
@@ -254,8 +253,8 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke', 'orange')
             .attr('stroke-width', '2')
         
-        d3.selectAll(".point:food_production_index")
-            .attr("visibility", "visible")
+        plotInner.selectAll(".point_food_production_index")
+            .attr("opacity", 1)
     }
     
     if(document.getElementById("gdp").checked) {
@@ -268,8 +267,8 @@ function createLineChart(lineChartData, selectedAttr) {
             .attr('stroke-width', '2')
         
         // agricultural_land_percent
-        d3.selectAll(".point:agricultural_land_percent")
-            .attr("visibility", "visible")
+        plotInner.selectAll(".point_agricultural_land_percent")
+            .attr("opacity", 1)
     }
 
 
