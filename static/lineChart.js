@@ -175,7 +175,7 @@ function createLineChart(lineChartData, selectedAttr) {
         .attr("fill", "white")
         .attr("font-size", "22px")
         // .text(selectedAttr);
-        .text("Selected Attributes in %");
+        .text("Scaled values of Attributes");
 
 
     plotOuter.append("text")

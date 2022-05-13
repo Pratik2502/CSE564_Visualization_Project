@@ -358,7 +358,8 @@ def get_agri_pcp_data():
     # temp_df['cluster'] = KMeans(n_clusters=2).fit(temp_df).labels_
 
     # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
-    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
+    # country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['GDP_per_capita']]).labels_
+    country_avg_df['cluster'] = KMeans(n_clusters=3).fit(country_avg_df[['crop_production_index']]).labels_
     dataToReturn["pcpData"] = country_avg_df.to_dict(orient="records")
 
 

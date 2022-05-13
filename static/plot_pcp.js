@@ -168,12 +168,14 @@ function plot_pcp(pcp_data, order){
         // Add an axis and title.
         g.append("g")
             .attr("class", "axispcp")
+            .style("fill", "white")
+            .style("font-size", "18px")
             .each(function (d) { d3.select(this).call(d3.axisLeft().scale(y[d])); })
             .append("text")
             .style("text-anchor", "middle")
             .attr("transform", "rotate(-10)")
-            .attr("fill", "white")
-            .attr("font-size", "18")
+            .style("fill", "white")
+            .style("font-size", "18px")
             .attr("y", -9)
             .text(function (d) { return d; });
 
@@ -246,5 +248,31 @@ function plot_pcp(pcp_data, order){
                 });
             }
         }
+
+
+        // document.getElementsByClassName("axispcp").
+        // svg.selectAll(".axispcp").each(function(pcpaxis) {
+        //     pcpaxis.click();
+        // });
         
+        // svg.selectAll(".axispcp")
+        //     .each(function (d) { d3.select(this).on("click")(); })
+        
+        
+
+
+        // var liste = document.querySelectorAll(".axispcp");
+        // console.log("    !!!!!!!!!!!!!!    ")
+        // // liste.click();
+        // for (i = 0; i < liste.length; ++i) {
+        //     liste[i].click();
+        // };
+
+        // console.log(list);
+        // Array.from(list).forEach(ele => {
+        //     // console.log(ele);
+        //     ele.viewportElement.click();
+        //     // ele.click();
+        // });
+
     }
